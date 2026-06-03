@@ -15,7 +15,7 @@ app.use(express.static(path.join(__dirname, 'dist')));
 
 // React Router / SPA fallback
 // Any request that doesn't match a static file in 'dist' will serve index.html
-app.get('*', (req, res) => {
+app.use((req, res) => {
   res.sendFile(path.join(__dirname, 'dist', 'index.html'));
 });
 
