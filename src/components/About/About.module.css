@@ -1,0 +1,119 @@
+.about {
+  position: relative;
+  background: linear-gradient(180deg, #1a3d2a 0%, #2A4B3A 50%, #1f3a29 100%);
+  min-height: 150vh;
+  padding: 150px 0;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+}
+
+.bgImage {
+  position: absolute;
+  top: 50%;
+  right: -10%;
+  transform: translateY(-50%);
+  width: 800px;
+  height: 800px;
+  opacity: 0.05;
+  filter: blur(10px) sepia(1) hue-rotate(320deg) saturate(3);
+  pointer-events: none;
+  z-index: 0;
+  will-change: transform;
+}
+
+.container {
+  position: relative;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 40px;
+  z-index: 10;
+  display: flex;
+  width: 100%;
+}
+
+.lineContainer {
+  margin-right: 40px;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.verticalLine {
+  width: 4px;
+  height: 350px;
+  background-color: #ffb6b9; /* Pinkish color matching Lenis demo */
+  border-radius: 4px;
+  will-change: transform;
+}
+
+.contentWrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex: 1;
+}
+
+.title {
+  font-family: Impact, "Arial Black", sans-serif;
+  font-size: clamp(4rem, 12vw, 10rem);
+  font-weight: 900;
+  color: #f4f4f4;
+  line-height: 0.85;
+  margin: 0;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+}
+
+.textContainer {
+  position: absolute;
+  right: 80px;
+  top: 50%;
+  width: 450px;
+  margin: 0;
+  will-change: transform;
+}
+
+.paragraph {
+  font-family: var(--font-family-base), sans-serif;
+  font-size: 1.125rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.85);
+  margin-bottom: 24px;
+}
+
+.highlight {
+  color: #ffb6b9;
+}
+
+@media (max-width: 1024px) {
+  .title {
+    font-size: clamp(3rem, 10vw, 6rem);
+  }
+  .textContainer {
+    margin-right: 0;
+    margin-top: 40px;
+  }
+}
+
+@media (max-width: 768px) {
+  .about {
+    padding: 100px 0;
+  }
+  .container {
+    flex-direction: column;
+    padding: 0 20px;
+  }
+  .lineContainer {
+    display: none; /* Hide the line on very small screens for better space usage, or keep it horizontally */
+  }
+  .title {
+    font-size: clamp(3rem, 15vw, 5rem);
+    line-height: 0.9;
+  }
+  .textContainer {
+    align-self: flex-start;
+    margin-top: 40px;
+  }
+}

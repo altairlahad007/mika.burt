@@ -1,0 +1,203 @@
+.productsSection {
+  position: relative;
+  background: linear-gradient(180deg, #1f3a29 0%, #15271d 100%);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  padding: 80px 0;
+}
+
+.header {
+  padding: 0 80px;
+  margin-bottom: 60px;
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+
+.sectionTitle {
+  font-family: Impact, "Arial Black", sans-serif;
+  font-size: clamp(2rem, 5vw, 4rem);
+  font-weight: 900;
+  color: #f4f4f4;
+  margin: 0;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.line {
+  height: 2px;
+  flex: 1;
+  background: linear-gradient(90deg, #ffb6b9, transparent);
+}
+
+.scrollContainer {
+  position: relative;
+  width: 100vw;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.cardsWrapper {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  gap: 40px;
+  padding: 0 80px;
+  /* Will be animated horizontally by GSAP */
+  will-change: transform;
+}
+
+.card {
+  flex: 0 0 450px;
+  width: 450px;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.02);
+  backdrop-filter: blur(10px);
+  padding: 40px;
+  transition: border-color 0.4s ease, transform 0.4s ease;
+}
+
+.card:hover {
+  border-color: rgba(255, 182, 185, 0.5); /* #ffb6b9 with opacity */
+  transform: translateY(-5px);
+}
+
+.cardHeader {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  margin-bottom: 40px;
+}
+
+.cardNumber {
+  font-family: Impact, "Arial Black", sans-serif;
+  font-size: 5rem;
+  line-height: 0.8;
+  color: #ffb6b9;
+  font-weight: 900;
+}
+
+.imageContainer {
+  width: 100%;
+  height: 280px;
+  overflow: hidden;
+  border-radius: 4px;
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.8s ease;
+}
+
+.card:hover .image {
+  transform: scale(1.05);
+}
+
+.cardContent {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  justify-content: space-between;
+}
+
+.cardTitle {
+  font-family: Impact, "Arial Black", sans-serif;
+  font-size: 2rem;
+  color: #f4f4f4;
+  margin: 0 0 16px 0;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.cardDescription {
+  font-family: var(--font-family-base), sans-serif;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.7);
+  margin: 0 0 30px 0;
+}
+
+.cardFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: auto;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 24px;
+}
+
+.price {
+  font-family: Impact, "Arial Black", sans-serif;
+  font-size: 1.5rem;
+  color: #f4f4f4;
+}
+
+.ctaButton {
+  background: transparent;
+  border: 1px solid #ffb6b9;
+  color: #ffb6b9;
+  padding: 12px 24px;
+  font-family: var(--font-family-base), sans-serif;
+  font-weight: 600;
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.ctaButton:hover {
+  background: #ffb6b9;
+  color: #15271d;
+}
+
+@media (max-width: 1024px) {
+  .header {
+    padding: 0 40px;
+  }
+  .cardsWrapper {
+    padding: 0 40px;
+  }
+  .card {
+    flex: 0 0 380px;
+    width: 380px;
+    padding: 30px;
+  }
+  .cardNumber {
+    font-size: 4rem;
+  }
+  .imageContainer {
+    height: 240px;
+  }
+}
+
+@media (max-width: 768px) {
+  .header {
+    padding: 0 20px;
+  }
+  .cardsWrapper {
+    padding: 0 20px;
+    gap: 20px;
+  }
+  .card {
+    flex: 0 0 300px;
+    width: 300px;
+    padding: 20px;
+  }
+  .cardNumber {
+    font-size: 3rem;
+  }
+  .imageContainer {
+    height: 200px;
+  }
+  .cardTitle {
+    font-size: 1.5rem;
+  }
+}

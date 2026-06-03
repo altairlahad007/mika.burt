@@ -1,0 +1,130 @@
+.ceoSection {
+  position: relative;
+  background: linear-gradient(180deg, #15271d 0%, #1a3d2a 50%, #0f0f0f 100%);
+  min-height: 150vh;
+  padding: 150px 0;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+}
+
+.bgImage {
+  position: absolute;
+  top: 40%;
+  left: 10%;
+  transform: translateY(-50%);
+  height: 900px;
+  opacity: 0.15;
+  filter: grayscale(100%) contrast(1.2);
+  pointer-events: none;
+  z-index: 0;
+  will-change: transform;
+}
+
+.container {
+  position: relative;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 40px;
+  z-index: 10;
+  display: flex;
+  width: 100%;
+}
+
+.lineContainer {
+  margin-right: 40px;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.verticalLine {
+  width: 4px;
+  height: 350px;
+  background-color: #c9a96e; /* Using the gold theme color for variety */
+  border-radius: 4px;
+  will-change: transform;
+}
+
+.contentWrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex: 1;
+}
+
+.title {
+  font-family: Impact, "Arial Black", sans-serif;
+  font-size: clamp(4rem, 15vw, 12rem);
+  font-weight: 900;
+  color: #f4f4f4;
+  line-height: 0.85;
+  margin: 0;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+}
+
+.textContainer {
+  position: absolute;
+  right: 80px;
+  top: 50%;
+  width: 450px;
+  margin: 0;
+  will-change: transform;
+}
+
+.label {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: #c9a96e;
+  margin-bottom: 24px;
+}
+
+.paragraph {
+  font-family: var(--font-family-base), sans-serif;
+  font-size: 1.125rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.85);
+  margin-bottom: 24px;
+}
+
+.highlight {
+  color: #c9a96e;
+}
+
+@media (max-width: 1024px) {
+  .title {
+    font-size: clamp(3rem, 12vw, 8rem);
+  }
+  .textContainer {
+    right: 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .ceoSection {
+    padding: 100px 0;
+  }
+  .container {
+    flex-direction: column;
+    padding: 0 20px;
+  }
+  .lineContainer {
+    display: none;
+  }
+  .title {
+    font-size: clamp(3rem, 18vw, 6rem);
+  }
+  .textContainer {
+    position: relative;
+    top: auto;
+    right: auto;
+    align-self: flex-start;
+    margin-top: 40px;
+    transform: none !important; /* Disable parallax on small screens */
+  }
+}
