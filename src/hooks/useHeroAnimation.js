@@ -152,7 +152,7 @@ export function useHeroAnimation(containerRef) {
   // CTA button glow pulse
   const createCtaPulse = (btnElement) => {
     return gsap.to(btnElement, {
-      boxShadow: '0 0 40px rgba(6, 182, 212, 0.6), 0 0 80px rgba(6, 182, 212, 0.35)',
+      boxShadow: '0 0 40px var(--color-border), 0 0 80px var(--color-border)',
       duration: 1.5,
       ease: 'sine.inOut',
       repeat: -1,

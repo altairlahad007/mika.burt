@@ -1,6 +1,6 @@
 .about {
   position: relative;
-  background: linear-gradient(180deg, #1a3d2a 0%, #2A4B3A 50%, #1f3a29 100%);
+  background: var(--color-background);
   min-height: 150vh;
   padding: 150px 0;
   overflow: hidden;
@@ -42,7 +42,7 @@
 .verticalLine {
   width: 4px;
   height: 350px;
-  background-color: #ffb6b9; /* Pinkish color matching Lenis demo */
+  background-color: var(--color-primary);
   border-radius: 4px;
   will-change: transform;
 }
@@ -50,49 +50,56 @@
 .contentWrapper {
   position: relative;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
   flex: 1;
+  gap: 40px;
 }
 
 .title {
-  font-family: Impact, "Arial Black", sans-serif;
+  font-family: var(--font-family-heading);
   font-size: clamp(4rem, 12vw, 10rem);
-  font-weight: 900;
-  color: #f4f4f4;
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text);
   line-height: 0.85;
   margin: 0;
   letter-spacing: -0.02em;
   text-transform: uppercase;
+  flex: 1;
 }
 
 .textContainer {
-  position: absolute;
-  right: 80px;
-  top: 50%;
+  position: relative;
   width: 450px;
+  flex-shrink: 0;
   margin: 0;
   will-change: transform;
 }
 
 .paragraph {
-  font-family: var(--font-family-base), sans-serif;
+  font-family: var(--font-family-base);
   font-size: 1.125rem;
   line-height: 1.6;
-  color: rgba(255, 255, 255, 0.85);
+  color: var(--color-text-muted);
   margin-bottom: 24px;
 }
 
 .highlight {
-  color: #ffb6b9;
+  color: var(--color-primary);
 }
 
 @media (max-width: 1024px) {
+  .contentWrapper {
+    flex-direction: column;
+    align-items: flex-start;
+  }
   .title {
     font-size: clamp(3rem, 10vw, 6rem);
   }
   .textContainer {
-    margin-right: 0;
+    width: 100%;
+    max-width: 450px;
     margin-top: 40px;
   }
 }
@@ -106,14 +113,13 @@
     padding: 0 20px;
   }
   .lineContainer {
-    display: none; /* Hide the line on very small screens for better space usage, or keep it horizontally */
+    display: none;
   }
   .title {
     font-size: clamp(3rem, 15vw, 5rem);
     line-height: 0.9;
   }
   .textContainer {
-    align-self: flex-start;
     margin-top: 40px;
   }
 }

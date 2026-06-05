@@ -35,13 +35,11 @@ function About() {
         }
       )
 
-      // Parallax for the text block (starts lower, moves up)
-      // It is absolute positioned at top: 50%, so yPercent: -50 is perfectly centered.
-      // We go from yPercent: 50 to yPercent: -150, meaning at progress 0.5 it hits -50%.
+      // Parallax for the text block (subtle, perfectly centered at midpoint)
       gsap.fromTo(textRef.current, 
-        { yPercent: 50 },
+        { yPercent: 30 },
         {
-          yPercent: -150,
+          yPercent: -30,
           ease: 'none',
           scrollTrigger: {
             trigger: sectionRef.current,
@@ -87,10 +85,10 @@ function About() {
           
           <div ref={textRef} className={styles.textContainer}>
             <p className={styles.paragraph}>
-              We have to give props to the raw materials we find in nature. We sculpt, shape, and fire our ceramics entirely by hand, ensuring that no two pieces are ever exactly alike.
+              Mika Burt is a visual artist based in Ulaanbaatar, Mongolia, working primarily with ceramic sculpture and installation. My practice centers on the human figure as a site of emotional memory, vulnerability, and transformation. Through distorted, concealed, and introspective forms, I explore the complex relationship between inner psychological states and outward physical presence.
             </p>
             <p className={styles.paragraph}>
-              Drawing deep inspiration from natural landscapes and expressive human figures, our work celebrates the <span className={styles.highlight}>perfectly imperfect</span>. Every piece carries the warmth and character of its origin.
+              Clay is integral to this exploration. Its responsiveness and capacity for transformation mirror the emotional processes that inform my work. Through hand-building, surface treatment, and firing techniques, I create forms that retain traces of touch, gesture, and imperfection, emphasizing the intimate connection between body, material, and experience.
             </p>
           </div>
         </div>

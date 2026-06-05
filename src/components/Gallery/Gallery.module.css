@@ -1,6 +1,6 @@
 .gallerySection {
   position: relative;
-  background: #0f0f0f;
+  background: var(--color-background);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -19,10 +19,10 @@
 }
 
 .sectionTitle {
-  font-family: Impact, "Arial Black", sans-serif;
+  font-family: var(--font-family-heading);
   font-size: clamp(2rem, 5vw, 4rem);
-  font-weight: 900;
-  color: #f4f4f4;
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text);
   margin: 0;
   letter-spacing: 0.05em;
   text-transform: uppercase;
@@ -31,7 +31,7 @@
 .line {
   height: 2px;
   flex: 1;
-  background: linear-gradient(90deg, #ffb6b9, transparent);
+  background: linear-gradient(90deg, var(--color-primary), transparent);
 }
 
 .gridContainer {

@@ -1,6 +1,6 @@
 .portfolioSection {
   position: relative;
-  background: #0f0f0f;
+  background: var(--color-background);
   height: 100vh; /* The section itself is 100vh, ScrollTrigger pins it */
   width: 100vw;
   overflow: hidden;
@@ -26,10 +26,10 @@
 }
 
 .title {
-  font-family: Impact, "Arial Black", sans-serif;
+  font-family: var(--font-family-heading);
   font-size: clamp(4rem, 10vw, 8rem);
-  font-weight: 900;
-  color: #f4f4f4;
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text);
   margin: 0;
   letter-spacing: 0.05em;
   text-transform: uppercase;
@@ -37,20 +37,20 @@
 }
 
 .subtitle {
-  font-family: var(--font-family-base), sans-serif;
+  font-family: var(--font-family-base);
   font-size: 1.2rem;
   letter-spacing: 0.4em;
-  color: #ffb6b9;
+  color: var(--color-text-muted);
   margin-top: 10px;
-  font-weight: 600;
+  font-weight: var(--font-weight-semibold);
   text-shadow: 0 4px 15px rgba(0,0,0,0.8);
 }
 
 .loader {
   position: absolute;
   z-index: 20;
-  color: #c9a96e;
-  font-family: var(--font-family-base), sans-serif;
+  color: var(--color-primary);
+  font-family: var(--font-family-base);
   font-size: 1.2rem;
   letter-spacing: 0.2em;
   text-transform: uppercase;

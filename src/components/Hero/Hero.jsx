@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react'
 import { gsap } from 'gsap'
-import heroImage from '../../assets/images/8.png'
+import centerImage from '../../assets/images/9.png'
+import fullscreenImage from '../../assets/images/8.png'
 import styles from './Hero.module.css'
 import { useHeroAnimation } from '../../hooks/useHeroAnimation'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
@@ -30,24 +31,39 @@ function Hero() {
     const rightContent = heroRef.current.querySelector('[class*="rightContent"]')
     const centerPiece = heroRef.current.querySelector('[class*="centerPiece"]')
 
+    const fullscreenBg = heroRef.current.querySelector('.hero-fullscreen-bg')
+    const fullscreenImg = heroRef.current.querySelector('[class*="fullscreenImage"]')
+
     // Fade out surrounding content (using fromTo to ensure it returns to opacity: 1 on scroll up)
     tl.fromTo([nav, leftContent, rightContent], 
       { opacity: 1 },
       {
         opacity: 0,
-        duration: 0.5,
+        duration: 0.4,
         ease: 'power2.inOut'
       }, 0
     )
 
-    // Zoom in the center piece
+    // Zoom in the center piece and fade out
     tl.fromTo(centerPiece,
-      { scale: 1 },
+      { scale: 1, opacity: 1 },
       {
-        scale: 3.5, // The zoom level
-        duration: 1,
-        ease: 'power1.inOut'
+        scale: 6, // massive zoom
+        opacity: 0,
+        duration: 0.6,
+        ease: 'power2.in'
       }, 0
+    )
+
+    // Full screen camera blur fix and zoom for 8.png
+    tl.fromTo(fullscreenBg,
+      { opacity: 0 },
+      { opacity: 1, duration: 0.4, ease: 'power2.inOut' }, 0.2
+    )
+
+    tl.fromTo(fullscreenImg,
+      { filter: 'blur(30px)', scale: 1 },
+      { filter: 'blur(0px)', scale: 1.15, duration: 0.8, ease: 'power2.out' }, 0.2
     )
 
     return () => {
@@ -89,6 +105,11 @@ function Hero() {
     <section id="home" ref={heroRef} className={styles.hero}>
       <div className={styles.backgroundGradient} />
       <div className={styles.lightSource} />
+
+      {/* Fullscreen Blur Fix Layer */}
+      <div className={`${styles.fullscreenBg} hero-fullscreen-bg`}>
+        <img src={fullscreenImage} alt="" className={styles.fullscreenImage} />
+      </div>
 
       {/* Navigation */}
       <nav className={`${styles.nav} hero-nav`}>
@@ -238,7 +259,7 @@ function Hero() {
             <div className={`${styles.archTier} hero-arch-tier`} />
           </div>
           <div className={`${styles.artPiece} hero-art-piece`}>
-            <img src={heroImage} alt="Handcrafted ceramic sculpture" className={styles.heroImage} />
+            <img src={centerImage} alt="Handcrafted ceramic sculpture" className={styles.heroImage} />
           </div>
         </div>
 
