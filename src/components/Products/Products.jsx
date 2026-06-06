@@ -108,8 +108,7 @@ function Products() {
                 <h3 className={styles.cardTitle}>{product.title}</h3>
                 <p className={styles.cardDescription}>{product.description}</p>
                 <div className={styles.cardFooter}>
-                  <span className={styles.price}>{product.price}</span>
-                  <button className={styles.ctaButton}>Add to Cart</button>
+                  <a href="https://www.instagram.com/mika.burt" target="_blank" rel="noopener noreferrer" className={styles.ctaButton}>Ask for price</a>
                 </div>
               </div>
             </div>

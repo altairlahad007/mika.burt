@@ -135,7 +135,7 @@ function Portfolio() {
   }, [imagesLoaded])
 
   return (
-    <section ref={sectionRef} className={styles.portfolioSection}>
+    <section id="portfolio" ref={sectionRef} className={styles.portfolioSection}>
       {!imagesLoaded && (
         <div className={styles.loader}>Loading Sequence...</div>
       )}

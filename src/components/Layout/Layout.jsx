@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react'
 import Hero from '../Hero/Hero'
 import About from '../About/About'
 import Products from '../Products/Products'
-import CEO from '../CEO/CEO'
 import Gallery from '../Gallery/Gallery'
 import Portfolio from '../Portfolio/Portfolio'
 import Footer from '../Footer/Footer'
@@ -28,7 +27,6 @@ function Layout() {
         <Hero />
         <About />
         <Products />
-        <CEO />
         <Gallery />
         <Portfolio />
         <Footer />

@@ -128,12 +128,22 @@ function Hero() {
           </li>
           <li>
             <a
-              href="#products"
+              href="#about"
               className={styles.navLink}
-              onClick={(e) => { e.preventDefault(); window.lenis?.scrollTo('#products') }}
+              onClick={(e) => { e.preventDefault(); window.lenis?.scrollTo('#about') }}
               onMouseEnter={(e) => gsap.to(e.currentTarget, { y: -2, opacity: 1, duration: 0.2 })}
               onMouseLeave={(e) => gsap.to(e.currentTarget, { y: 0, opacity: 0.9, duration: 0.2 })}
-            >Shop</a>
+            >About</a>
+          </li>
+          <li>
+            <a
+              href="https://www.instagram.com/mika.burt"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.navLink}
+              onMouseEnter={(e) => gsap.to(e.currentTarget, { y: -2, opacity: 1, duration: 0.2 })}
+              onMouseLeave={(e) => gsap.to(e.currentTarget, { y: 0, opacity: 0.9, duration: 0.2 })}
+            >Products</a>
           </li>
           <li>
             <a
@@ -142,16 +152,16 @@ function Hero() {
               onClick={(e) => { e.preventDefault(); window.lenis?.scrollTo('#gallery') }}
               onMouseEnter={(e) => gsap.to(e.currentTarget, { y: -2, opacity: 1, duration: 0.2 })}
               onMouseLeave={(e) => gsap.to(e.currentTarget, { y: 0, opacity: 0.9, duration: 0.2 })}
-            >Categories</a>
+            >Our Work</a>
           </li>
           <li>
             <a
-              href="#about"
+              href="#portfolio"
               className={styles.navLink}
-              onClick={(e) => { e.preventDefault(); window.lenis?.scrollTo('#about') }}
+              onClick={(e) => { e.preventDefault(); window.lenis?.scrollTo('#portfolio') }}
               onMouseEnter={(e) => gsap.to(e.currentTarget, { y: -2, opacity: 1, duration: 0.2 })}
               onMouseLeave={(e) => gsap.to(e.currentTarget, { y: 0, opacity: 0.9, duration: 0.2 })}
-            >About</a>
+            >Portfolio</a>
           </li>
         </ul>
         <div className={styles.navRight}>
@@ -204,9 +214,9 @@ function Hero() {
             <p className={styles.description}>
               Discover timeless, handmade ceramics designed to bring warmth and character to your home.
             </p>
-            <button className={`${styles.ctaBtn} hero-cta-btn`} data-hero-cta>
+            <a href="https://www.instagram.com/mika.burt" target="_blank" rel="noopener noreferrer" className={`${styles.ctaBtn} hero-cta-btn`} data-hero-cta>
               Shop Collection
-            </button>
+            </a>
           </div>
 
           <div className={`${styles.featuresLeft} hero-features`}>
@@ -301,9 +311,9 @@ function Hero() {
             </div>
           </div>
 
-          <button className={`${styles.ctaBtnRight} hero-cta-btn`} data-hero-cta>
+          <a href="https://www.instagram.com/mika.burt" target="_blank" rel="noopener noreferrer" className={`${styles.ctaBtnRight} hero-cta-btn`} data-hero-cta>
             Explore Story
-          </button>
+          </a>
         </div>
       </div>
     </section>

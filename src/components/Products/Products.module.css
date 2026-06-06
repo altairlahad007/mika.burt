@@ -127,16 +127,10 @@
 .cardFooter {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   margin-top: auto;
   border-top: 1px solid var(--color-border);
   padding-top: 24px;
-}
-
-.price {
-  font-family: var(--font-family-heading);
-  font-size: 1.5rem;
-  color: var(--color-text);
 }
 
 .ctaButton {
@@ -151,6 +145,10 @@
   letter-spacing: 0.1em;
   cursor: pointer;
   transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-block;
+  width: 100%;
+  text-align: center;
 }
 
 .ctaButton:hover {

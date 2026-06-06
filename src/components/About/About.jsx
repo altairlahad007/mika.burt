@@ -5,6 +5,7 @@ import styles from './About.module.css'
 
 // Import an image to use as the faint glowing background
 import bgImage from '../../assets/images/8.png'
+import mikaBurtImg from '../../assets/images/mika_burt.jpg'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -77,11 +78,13 @@ function About() {
         </div>
         
         <div className={styles.contentWrapper}>
-          <h2 className={styles.title}>
-            CRAFTING<br />
-            ORGANIC<br />
-            FORMS
-          </h2>
+          <div className={styles.imageColumn}>
+            <div className={styles.titleWrapper}>
+              <h2 className={styles.title}>MIKA BURT</h2>
+              <p className={styles.position}>FOUNDER AND CEO</p>
+            </div>
+            <img src={mikaBurtImg} alt="Mika Burt" className={styles.mikaBurtImage} />
+          </div>
           
           <div ref={textRef} className={styles.textContainer}>
             <p className={styles.paragraph}>

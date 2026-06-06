@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import styles from './Gallery.module.css'
@@ -19,6 +19,7 @@ const col2 = [img2, img5, img8, img3]
 const col3 = [img3, img6, img1, img5]
 
 function Gallery() {
+  const [selectedImg, setSelectedImg] = useState(null)
   const sectionRef = useRef(null)
   const col1Ref = useRef(null)
   const col2Ref = useRef(null)
@@ -87,26 +88,39 @@ function Gallery() {
       <div className={styles.gridContainer}>
         <div ref={col1Ref} className={styles.column}>
           {col1.map((img, i) => (
-            <div key={`col1-${i}`} className={styles.imageWrapper}>
+            <div key={`col1-${i}`} className={styles.imageWrapper} onClick={() => setSelectedImg(img)}>
               <img src={img} alt={`Gallery artwork ${i}`} className={styles.image} />
             </div>
           ))}
         </div>
         <div ref={col2Ref} className={`${styles.column} ${styles.colCenter}`}>
           {col2.map((img, i) => (
-            <div key={`col2-${i}`} className={styles.imageWrapper}>
+            <div key={`col2-${i}`} className={styles.imageWrapper} onClick={() => setSelectedImg(img)}>
               <img src={img} alt={`Gallery artwork ${i}`} className={styles.image} />
             </div>
           ))}
         </div>
         <div ref={col3Ref} className={styles.column}>
           {col3.map((img, i) => (
-            <div key={`col3-${i}`} className={styles.imageWrapper}>
+            <div key={`col3-${i}`} className={styles.imageWrapper} onClick={() => setSelectedImg(img)}>
               <img src={img} alt={`Gallery artwork ${i}`} className={styles.image} />
             </div>
           ))}
         </div>
       </div>
+
+      {selectedImg && (
+        <div className={styles.modalOverlay} onClick={() => setSelectedImg(null)}>
+          <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
+            <button className={styles.closeBtn} onClick={() => setSelectedImg(null)} aria-label="Close modal">×</button>
+            <img src={selectedImg} alt="Artwork detail" className={styles.modalImage} />
+            <div className={styles.modalInfo}>
+              <h3 className={styles.modalTitle}>Artwork Title</h3>
+              <p className={styles.modalDesc}>Detailed view of the selected ceramic piece. Exploring form, texture, and the relationship between body and material.</p>
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   )
 }
