@@ -1,57 +1,81 @@
 .portfolioSection {
-  position: relative;
+  padding: var(--space-24) 0;
   background: var(--color-background);
-  height: 100vh; /* The section itself is 100vh, ScrollTrigger pins it */
-  width: 100vw;
-  overflow: hidden;
+  min-height: 100vh;
+}
+
+.header {
+  margin-bottom: var(--space-16);
   display: flex;
   align-items: center;
-  justify-content: center;
-}
-
-.canvas {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 1;
-}
-
-.titleContainer {
-  position: relative;
-  z-index: 10;
-  text-align: center;
-  pointer-events: none;
+  gap: var(--space-8);
 }
 
 .title {
   font-family: var(--font-family-heading);
-  font-size: clamp(4rem, 10vw, 8rem);
-  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-3xl);
+  font-weight: var(--font-weight-normal);
+  letter-spacing: 0.1em;
   color: var(--color-text);
-  margin: 0;
+  white-space: nowrap;
+}
+
+.headerLine {
+  flex-grow: 1;
+  height: 1px;
+  background-color: var(--color-border);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: var(--space-8);
+}
+
+.card {
+  background: var(--color-surface);
+  border-radius: var(--radius-sm);
+  padding: var(--space-8) var(--space-4) var(--space-6);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  transition: transform var(--transition-base), box-shadow var(--transition-base);
+  border: 1px solid var(--color-border);
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-md);
+}
+
+.thumbnailContainer {
+  width: 100%;
+  aspect-ratio: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  margin-bottom: var(--space-8);
+}
+
+.thumbnail {
+  width: 90%;
+  height: 90%;
+  object-fit: contain;
+  transition: transform var(--transition-slow);
+}
+
+.card:hover .thumbnail {
+  transform: scale(1.05);
+}
+
+.cardTitle {
+  font-family: var(--font-family-heading);
+  font-size: var(--font-size-lg);
+  color: var(--color-text);
+  font-weight: var(--font-weight-medium);
   letter-spacing: 0.05em;
-  text-transform: uppercase;
-  text-shadow: 0 10px 30px rgba(0,0,0,0.8);
-}
-
-.subtitle {
-  font-family: var(--font-family-base);
-  font-size: 1.2rem;
-  letter-spacing: 0.4em;
-  color: var(--color-text-muted);
-  margin-top: 10px;
-  font-weight: var(--font-weight-semibold);
-  text-shadow: 0 4px 15px rgba(0,0,0,0.8);
-}
-
-.loader {
-  position: absolute;
-  z-index: 20;
-  color: var(--color-primary);
-  font-family: var(--font-family-base);
-  font-size: 1.2rem;
-  letter-spacing: 0.2em;
+  text-align: center;
   text-transform: uppercase;
 }

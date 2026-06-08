@@ -80,8 +80,8 @@ function About() {
         <div className={styles.contentWrapper}>
           <div className={styles.imageColumn}>
             <div className={styles.titleWrapper}>
-              <h2 className={styles.title}>MIKA BURT</h2>
-              <p className={styles.position}>FOUNDER AND CEO</p>
+              <h2 className={styles.titleSmall}>Hey! It's me</h2>
+              <p className={styles.position}>CERAMIST and visual artist</p>
             </div>
             <img src={mikaBurtImg} alt="Mika Burt" className={styles.mikaBurtImage} />
           </div>
