@@ -11,6 +11,7 @@ const NAV_ITEMS = [
 function Header({ theme, toggleTheme }) {
   const [isScrolled, setIsScrolled] = useState(false)
   const [activeSection, setActiveSection] = useState('home')
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [pillStyle, setPillStyle] = useState({ left: 0, width: 0, opacity: 0 })
   const navRefs = useRef({})
 
@@ -62,6 +63,7 @@ function Header({ theme, toggleTheme }) {
     e.preventDefault()
     window.lenis?.scrollTo(`#${id}`)
     setActiveSection(id) // Instant visual feedback
+    setIsMobileMenuOpen(false) // Close mobile menu if open
   }
 
   return (
@@ -111,6 +113,37 @@ function Header({ theme, toggleTheme }) {
             </svg>
           )}
         </button>
+        <button 
+          className={styles.mobileMenuBtn}
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          aria-label="Toggle Mobile Menu"
+        >
+          {isMobileMenuOpen ? (
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          ) : (
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+            </svg>
+          )}
+        </button>
+      </div>
+
+      <div className={`${styles.mobileMenuOverlay} ${isMobileMenuOpen ? styles.open : ''}`}>
+        <ul className={styles.mobileNavList}>
+          {NAV_ITEMS.map(({ id, label }) => (
+            <li key={`mobile-${id}`}>
+              <a
+                href={`#${id}`}
+                className={`${styles.mobileNavLink} ${activeSection === id ? styles.active : ''}`}
+                onClick={(e) => handleNavClick(e, id)}
+              >
+                {label}
+              </a>
+            </li>
+          ))}
+        </ul>
       </div>
     </header>
   )

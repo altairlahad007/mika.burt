@@ -117,14 +117,27 @@
     display: none;
   }
   .title {
-    font-size: clamp(3rem, 18vw, 6rem);
+    font-size: clamp(2.5rem, 15vw, 5rem);
   }
   .textContainer {
     position: relative;
     top: auto;
     right: auto;
+    width: 100%;
     align-self: flex-start;
     margin-top: 40px;
     transform: none !important; /* Disable parallax on small screens */
+  }
+}
+
+@media (max-width: 480px) {
+  .ceoSection {
+    padding: 60px 0;
+  }
+  .title {
+    font-size: clamp(2rem, 12vw, 3.5rem);
+  }
+  .paragraph {
+    font-size: 1rem;
   }
 }

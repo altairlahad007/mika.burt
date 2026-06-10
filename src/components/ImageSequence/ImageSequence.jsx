@@ -11,6 +11,7 @@ gsap.registerPlugin(ScrollTrigger)
 
 function ImageSequence() {
   const canvasRef = useRef(null)
+  const ambientCanvasRef = useRef(null)
   const sectionRef = useRef(null)
   const titleRef = useRef(null)
   const [imagesLoaded, setImagesLoaded] = useState(false)
@@ -55,13 +56,30 @@ function ImageSequence() {
     canvas.width = window.innerWidth
     canvas.height = window.innerHeight
 
-    // Render function imitating 'object-fit: cover'
+    // Render function with content-aware ambient fill and 'contain' for main
     const render = (index) => {
       if (!images[index]) return
       const img = images[index]
       
       const hRatio = canvas.width / img.width
       const vRatio = canvas.height / img.height
+      
+      // Draw Ambient (cover) - We'll keep it as a base layer
+      if (ambientCanvasRef.current) {
+        const aCanvas = ambientCanvasRef.current
+        if (aCanvas.width !== canvas.width) {
+          aCanvas.width = canvas.width
+          aCanvas.height = canvas.height
+        }
+        const aContext = aCanvas.getContext('2d')
+        const aRatio = Math.max(hRatio, vRatio)
+        const ax = (aCanvas.width - img.width * aRatio) / 2
+        const ay = (aCanvas.height - img.height * aRatio) / 2
+        aContext.clearRect(0, 0, aCanvas.width, aCanvas.height)
+        aContext.drawImage(img, 0, 0, img.width, img.height, ax, ay, img.width * aRatio, img.height * aRatio)
+      }
+
+      // Draw Main (cover to stretch full size)
       const ratio = Math.max(hRatio, vRatio)
       const centerShift_x = (canvas.width - img.width * ratio) / 2
       const centerShift_y = (canvas.height - img.height * ratio) / 2
@@ -69,6 +87,8 @@ function ImageSequence() {
       context.clearRect(0, 0, canvas.width, canvas.height)
       context.drawImage(img, 0, 0, img.width, img.height,
         centerShift_x, centerShift_y, img.width * ratio, img.height * ratio)
+      
+      // No feathering needed since image covers the full canvas
     }
 
     // Initial draw
@@ -99,7 +119,8 @@ function ImageSequence() {
       })
 
       // 2. Smooth Morph (shrink, round corners, and fade into the Footer)
-      tl.to(canvas, {
+      const morphTargets = ambientCanvasRef.current ? [ambientCanvasRef.current, canvas] : canvas;
+      tl.to(morphTargets, {
         clipPath: 'inset(15% 15% 15% 15% round 60px)',
         scale: 0.9,
         opacity: 0.1,
@@ -139,6 +160,7 @@ function ImageSequence() {
       {!imagesLoaded && (
         <div className={styles.loader}>Loading Sequence...</div>
       )}
+      <canvas ref={ambientCanvasRef} className={styles.ambientCanvas}></canvas>
       <canvas ref={canvasRef} className={styles.canvas}></canvas>
       <div ref={titleRef} className={styles.titleContainer}>
         <h2 className={styles.title}>JOURNEY</h2>

@@ -7,21 +7,9 @@
   background: rgba(0, 0, 0, 0.85); /* Dark translucent backdrop */
   backdrop-filter: blur(8px);
   z-index: calc(var(--z-modal, 1400) + 100);
-}
-
-.scrollContainer {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  overflow-y: auto;
-  overflow-x: hidden;
-  scrollbar-width: none; /* Firefox */
-}
-
-.scrollContainer::-webkit-scrollbar {
-  display: none; /* Safari and Chrome */
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .closeButton {
@@ -68,25 +56,10 @@
   pointer-events: none;
 }
 
-.scrollSpace {
-  width: 100%;
-}
-
-.stickyWrapper {
-  position: sticky;
-  top: 0;
-  width: 100vw;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  pointer-events: none; /* Let scroll events pass through */
-}
-
 .imageContainer {
   position: relative;
-  width: 85vw; /* Reduced from 100vw */
-  height: 80vh; /* Reduced from 100vh */
+  width: 85vw;
+  height: 80vh;
   max-width: 1400px;
   max-height: 900px;
   border-radius: 12px;
@@ -96,17 +69,57 @@
   pointer-events: auto;
 }
 
+.imageWrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 0.8s ease-in-out;
+  pointer-events: none;
+}
+
+.imageWrapper.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.progressBar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.7);
+  width: 100%;
+  transform-origin: left;
+  transform: scaleX(0);
+  z-index: 102;
+}
+
+.ambientLayer {
+  position: absolute;
+  top: -10%;
+  left: -10%;
+  width: 120%;
+  height: 120%;
+  object-fit: cover;
+  filter: blur(80px);
+  opacity: 0.6;
+  z-index: 1;
+}
+
 .imageLayer {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  will-change: transform, opacity;
+  object-fit: contain;
+  z-index: 2;
+  will-change: transform;
   margin: 0;
   padding: 0;
-  transform-origin: center center;
 }
 
 .loader {
@@ -120,4 +133,149 @@
   letter-spacing: 0.2em;
   text-transform: uppercase;
   z-index: calc(var(--z-modal, 1400) + 101);
+}
+
+.textOverlayWrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-start;
+  padding: 40px;
+  z-index: 100;
+  pointer-events: none;
+}
+
+.textOverlaySlide {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+  pointer-events: none;
+}
+
+.textOverlaySlide.hiddenText {
+  transform: translateX(calc(-100% + 55px));
+}
+
+.toggleTextBtn {
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: auto;
+  backdrop-filter: blur(4px);
+  transition: background 0.3s ease;
+  font-size: 1.1rem;
+}
+
+.toggleTextBtn:hover {
+  background: rgba(0, 0, 0, 0.9);
+}
+
+.textOverlayContent {
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  padding: 30px 40px;
+  border-radius: 16px;
+  max-width: 600px;
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+  pointer-events: auto;
+}
+
+.subtitle {
+  font-size: 1.1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 12px;
+  color: #e0e0e0;
+  font-weight: 500;
+}
+
+.dimensions {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 24px;
+  color: #a0a0a0;
+  font-family: monospace;
+}
+
+.description {
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-bottom: 16px;
+  color: #f0f0f0;
+}
+
+.description:last-child {
+  margin-bottom: 0;
+}
+
+.list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.list li {
+  font-size: 0.9rem;
+  line-height: 1.5;
+  margin-bottom: 10px;
+  color: #e0e0e0;
+  position: relative;
+  padding-left: 15px;
+}
+
+.list li::before {
+  content: '•';
+  position: absolute;
+  left: 0;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.sliderButton {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 101;
+  transition: background 0.3s ease, transform 0.3s ease;
+  font-size: 1.2rem;
+  backdrop-filter: blur(4px);
+}
+
+.sliderButton:hover {
+  background: rgba(0, 0, 0, 0.8);
+  transform: translateY(-50%) scale(1.1);
+}
+
+.prevButton {
+  left: 30px;
+}
+
+.nextButton {
+  right: 30px;
 }

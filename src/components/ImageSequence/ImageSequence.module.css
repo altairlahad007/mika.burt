@@ -9,6 +9,17 @@
   justify-content: center;
 }
 
+.ambientCanvas {
+  position: absolute;
+  top: -10%;
+  left: -10%;
+  width: 120%;
+  height: 120%;
+  z-index: 0;
+  filter: blur(80px);
+  opacity: 0.6;
+}
+
 .canvas {
   position: absolute;
   top: 0;

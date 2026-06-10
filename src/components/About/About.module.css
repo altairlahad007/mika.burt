@@ -170,3 +170,19 @@
     margin-top: 40px;
   }
 }
+
+@media (max-width: 480px) {
+  .about {
+    padding: 60px 0;
+  }
+  .title {
+    font-size: clamp(2rem, 12vw, 2.5rem);
+  }
+  .titleSmall {
+    font-size: clamp(1.5rem, 8vw, 2rem);
+  }
+  .paragraph {
+    font-size: 1rem;
+  }
+}
+

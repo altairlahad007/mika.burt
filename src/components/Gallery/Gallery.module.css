@@ -175,3 +175,18 @@
     display: none; /* Hide 3rd column to keep it simple on small screens */
   }
 }
+
+@media (max-width: 480px) {
+  .gridContainer {
+    grid-template-columns: 1fr; /* 1 column on mobile */
+    height: auto;
+    padding-bottom: 40px;
+  }
+  .column:nth-child(2) {
+    display: none; /* Hide 2nd column as well on very small screens */
+  }
+  .sectionTitle {
+    font-size: clamp(1.5rem, 8vw, 2.5rem);
+  }
+}
+

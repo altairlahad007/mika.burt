@@ -60,30 +60,32 @@ function Portfolio() {
 
         <div className={styles.grid}>
           {portfolios.map((portfolio, idx) => (
-            <div 
-              key={idx} 
+            <div
+              key={idx}
               className={styles.card}
               onClick={() => setSelectedPortfolio(portfolio)}
             >
               <div className={styles.thumbnailContainer}>
                 {portfolio.displayImage && (
-                  <img 
-                    src={portfolio.displayImage} 
-                    alt={portfolio.title} 
-                    className={styles.thumbnail} 
+                  <img
+                    src={portfolio.displayImage}
+                    alt={portfolio.title}
+                    className={styles.thumbnail}
                   />
                 )}
               </div>
-              <h3 className={styles.cardTitle}>{portfolio.title}</h3>
+              <div className={styles.overlay}>
+                <h3 className={styles.cardTitle}>{portfolio.title}</h3>
+              </div>
             </div>
           ))}
         </div>
       </div>
 
       {selectedPortfolio && (
-        <PortfolioModal 
-          portfolio={selectedPortfolio} 
-          onClose={() => setSelectedPortfolio(null)} 
+        <PortfolioModal
+          portfolio={selectedPortfolio}
+          onClose={() => setSelectedPortfolio(null)}
         />
       )}
     </section>

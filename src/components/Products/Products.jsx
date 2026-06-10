@@ -88,24 +88,22 @@ function Products() {
         <h2 className={styles.sectionTitle}>COLLECTION</h2>
         <div className={styles.line}></div>
       </div>
-      
+
       <div className={styles.scrollContainer}>
         <div ref={wrapperRef} className={styles.cardsWrapper}>
           {portfolios.map((portfolio, idx) => (
-            <div 
-              key={idx} 
+            <div
+              key={idx}
               className={styles.card}
               onClick={() => setSelectedPortfolio(portfolio)}
             >
-              <div className={styles.cardHeader}>
-                <div className={styles.imageContainer}>
-                  {portfolio.displayImage && (
-                    <img src={portfolio.displayImage} alt={portfolio.title} className={styles.image} />
-                  )}
-                </div>
+              <div className={styles.imageContainer}>
+                {portfolio.displayImage && (
+                  <img src={portfolio.displayImage} alt={portfolio.title} className={styles.image} />
+                )}
               </div>
               
-              <div className={styles.cardContent}>
+              <div className={styles.overlay}>
                 <h3 className={styles.cardTitle}>{portfolio.title}</h3>
               </div>
             </div>
@@ -114,9 +112,9 @@ function Products() {
       </div>
 
       {selectedPortfolio && (
-        <PortfolioModal 
-          portfolio={selectedPortfolio} 
-          onClose={() => setSelectedPortfolio(null)} 
+        <PortfolioModal
+          portfolio={selectedPortfolio}
+          onClose={() => setSelectedPortfolio(null)}
         />
       )}
     </section>
