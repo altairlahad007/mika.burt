@@ -4,8 +4,8 @@ import styles from './Header.module.css'
 const NAV_ITEMS = [
   { id: 'home', label: 'HOME' },
   { id: 'about', label: 'ABOUT' },
-  { id: 'products', label: 'PRODUCTS' },
-  { id: 'portfolio', label: 'PORTFOLIO' }
+  { id: 'products', label: 'WORKS' },
+  { id: 'portfolio', label: 'CONTACT' }
 ]
 
 function Header({ theme, toggleTheme }) {

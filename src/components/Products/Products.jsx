@@ -85,7 +85,7 @@ function Products() {
   return (
     <section id="products" ref={sectionRef} className={styles.productsSection}>
       <div className={styles.header}>
-        <h2 className={styles.sectionTitle}>COLLECTION</h2>
+        <h2 className={styles.sectionTitle}>WORKS</h2>
         <div className={styles.line}></div>
       </div>
 

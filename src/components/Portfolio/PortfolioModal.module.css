@@ -279,3 +279,70 @@
 .nextButton {
   right: 30px;
 }
+
+@media (max-width: 768px) {
+  .imageContainer {
+    width: 95vw;
+    height: 85vh;
+  }
+
+  .modalTitle {
+    font-size: 1.5rem;
+    top: 15px;
+    width: 80%;
+    text-align: center;
+    line-height: 1.3;
+    padding: 0;
+  }
+
+  .closeButton {
+    top: 10px;
+    right: 10px;
+    width: 40px;
+    height: 40px;
+    font-size: 1.2rem;
+  }
+
+  .textOverlayWrapper {
+    padding: 15px;
+  }
+
+  .textOverlayContent {
+    padding: 20px 15px;
+    max-height: 40vh;
+    overflow-y: auto;
+    max-width: calc(100vw - 90px);
+  }
+
+  .description, .list li {
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+
+  .subtitle {
+    font-size: 1rem;
+  }
+
+  .dimensions {
+    font-size: 0.8rem;
+    margin-bottom: 16px;
+  }
+
+  .sliderButton {
+    width: 40px;
+    height: 40px;
+    font-size: 1rem;
+  }
+
+  .prevButton {
+    left: 10px;
+  }
+
+  .nextButton {
+    right: 10px;
+  }
+
+  .textOverlaySlide.hiddenText {
+    transform: translateX(calc(-100% + 55px));
+  }
+}

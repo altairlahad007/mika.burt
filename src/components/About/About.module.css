@@ -151,6 +151,8 @@
 @media (max-width: 768px) {
   .about {
     padding: 100px 0;
+    min-height: auto;
+    display: block;
   }
   .container {
     flex-direction: column;
@@ -168,12 +170,15 @@
   }
   .textContainer {
     margin-top: 40px;
+    transform: none !important;
   }
 }
 
 @media (max-width: 480px) {
   .about {
     padding: 60px 0;
+    min-height: auto;
+    display: block;
   }
   .title {
     font-size: clamp(2rem, 12vw, 2.5rem);

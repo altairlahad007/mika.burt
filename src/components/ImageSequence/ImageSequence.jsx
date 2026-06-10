@@ -10,6 +10,7 @@ const frameUrls = Object.keys(frameModules).sort().map(key => frameModules[key].
 gsap.registerPlugin(ScrollTrigger)
 
 function ImageSequence() {
+  const canvasContainerRef = useRef(null)
   const canvasRef = useRef(null)
   const ambientCanvasRef = useRef(null)
   const sectionRef = useRef(null)
@@ -119,7 +120,7 @@ function ImageSequence() {
       })
 
       // 2. Smooth Morph (shrink, round corners, and fade into the Footer)
-      const morphTargets = ambientCanvasRef.current ? [ambientCanvasRef.current, canvas] : canvas;
+      const morphTargets = canvasContainerRef.current;
       tl.to(morphTargets, {
         clipPath: 'inset(15% 15% 15% 15% round 60px)',
         scale: 0.9,
@@ -160,8 +161,10 @@ function ImageSequence() {
       {!imagesLoaded && (
         <div className={styles.loader}>Loading Sequence...</div>
       )}
-      <canvas ref={ambientCanvasRef} className={styles.ambientCanvas}></canvas>
-      <canvas ref={canvasRef} className={styles.canvas}></canvas>
+      <div ref={canvasContainerRef} className={styles.canvasContainer}>
+        <canvas ref={ambientCanvasRef} className={styles.ambientCanvas}></canvas>
+        <canvas ref={canvasRef} className={styles.canvas}></canvas>
+      </div>
       <div ref={titleRef} className={styles.titleContainer}>
         <h2 className={styles.title}>JOURNEY</h2>
         <p className={styles.subtitle}>SCROLL TO EXPLORE</p>

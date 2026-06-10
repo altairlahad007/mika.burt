@@ -54,7 +54,7 @@ function Portfolio() {
     <section id="portfolio" className={styles.portfolioSection}>
       <div className="container">
         <div className={styles.header}>
-          <h2 className={styles.title}>COLLECTION</h2>
+          <h2 className={styles.title}>WORKS</h2>
           <div className={styles.headerLine}></div>
         </div>
 
