@@ -1,8 +1,8 @@
 .sequenceSection {
   position: relative;
   background: #0f0f0f;
-  height: 100vh; /* The section itself is 100vh, ScrollTrigger pins it */
-  width: 100vw;
+  height: var(--viewport-height);
+  width: 100%;
   overflow: hidden;
   display: flex;
   align-items: center;
@@ -43,27 +43,30 @@
   z-index: 10;
   text-align: center;
   pointer-events: none;
+  padding: calc(var(--header-height) + var(--safe-top) + 1rem) 1.5rem 1.5rem;
+  max-width: 100%;
 }
 
 .title {
   font-family: Impact, "Arial Black", sans-serif;
-  font-size: clamp(4rem, 10vw, 8rem);
+  font-size: clamp(2.25rem, 10vw, 8rem);
   font-weight: 900;
   color: #f4f4f4;
   margin: 0;
   letter-spacing: 0.05em;
   text-transform: uppercase;
-  text-shadow: 0 10px 30px rgba(0,0,0,0.8);
+  text-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+  line-height: 0.95;
 }
 
 .subtitle {
   font-family: var(--font-family-base), sans-serif;
-  font-size: 1.2rem;
-  letter-spacing: 0.4em;
-  color: black;
+  font-size: clamp(0.7rem, 2vw, 1.2rem);
+  letter-spacing: clamp(0.15em, 2vw, 0.4em);
+  color: rgba(255, 255, 255, 0.75);
   margin-top: 10px;
   font-weight: 600;
-  text-shadow: 0 4px 15px rgba(0,0,0,0.8);
+  text-shadow: 0 4px 15px rgba(0, 0, 0, 0.8);
 }
 
 .loader {
@@ -71,7 +74,32 @@
   z-index: 20;
   color: #c9a96e;
   font-family: var(--font-family-base), sans-serif;
-  font-size: 1.2rem;
+  font-size: clamp(0.875rem, 2vw, 1.2rem);
   letter-spacing: 0.2em;
   text-transform: uppercase;
+  padding: 0 1rem;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .titleContainer {
+    padding-top: calc(var(--header-height) + var(--safe-top) + 0.5rem);
+  }
+
+  .ambientCanvas {
+    filter: blur(40px);
+  }
+}
+
+@media (max-width: 480px) {
+  .title {
+    letter-spacing: 0.03em;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sequenceSection {
+    height: auto;
+    min-height: var(--viewport-height-small);
+  }
 }

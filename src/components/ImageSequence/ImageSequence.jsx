@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { getImageSequencePinDuration, prefersReducedMotion } from '../../utils/responsive'
 import styles from './ImageSequence.module.css'
 
 // Use Vite's import.meta.glob to dynamically import all frames
@@ -52,10 +53,17 @@ function ImageSequence() {
     const canvas = canvasRef.current
     const context = canvas.getContext('2d')
     const images = imagesRef.current
+    const container = canvasContainerRef.current
 
-    // Initialize canvas size
-    canvas.width = window.innerWidth
-    canvas.height = window.innerHeight
+    const resizeCanvas = () => {
+      const rect = container?.getBoundingClientRect()
+      const width = rect?.width || window.innerWidth
+      const height = rect?.height || window.innerHeight
+      canvas.width = width
+      canvas.height = height
+    }
+
+    resizeCanvas()
 
     // Render function with content-aware ambient fill and 'contain' for main
     const render = (index) => {
@@ -98,55 +106,59 @@ function ImageSequence() {
     const frameCount = images.length - 1
     const playhead = { frame: 0 }
 
+    const pinDuration = getImageSequencePinDuration()
+    const reducedMotion = prefersReducedMotion()
+
     const ctx = gsap.context(() => {
-      // Pin the section and animate the sequence followed by the morph
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: sectionRef.current,
           start: 'top top',
-          end: '+=6000', // Extended total pinned scroll duration for both sequence and morph
-          pin: true,
-          scrub: 0.5,
+          end: `+=${pinDuration}`,
+          pin: !reducedMotion,
+          scrub: reducedMotion ? false : 0.5,
         }
       })
 
-      // 1. Image Sequence (scrub through 100 frames)
-      tl.to(playhead, {
-        frame: frameCount,
-        snap: 'frame',
-        ease: 'none',
-        duration: 4, // Timeline proportion
-        onUpdate: () => render(playhead.frame)
-      })
+      if (!reducedMotion) {
+        tl.to(playhead, {
+          frame: frameCount,
+          snap: 'frame',
+          ease: 'none',
+          duration: 4,
+          onUpdate: () => render(playhead.frame)
+        })
 
-      // 2. Smooth Morph (shrink, round corners, and fade into the Footer)
-      const morphTargets = canvasContainerRef.current;
-      tl.to(morphTargets, {
-        clipPath: 'inset(15% 15% 15% 15% round 60px)',
-        scale: 0.9,
-        opacity: 0.1,
-        ease: 'power2.inOut',
-        duration: 2, // Timeline proportion
-      })
+        const morphTargets = canvasContainerRef.current
+        tl.to(morphTargets, {
+          clipPath: 'inset(15% 15% 15% 15% round 60px)',
+          scale: 0.9,
+          opacity: 0.1,
+          ease: 'power2.inOut',
+          duration: 2,
+        })
+      } else {
+        render(frameCount)
+      }
 
-      // Fade out the title slightly faster than the sequence begins
-      gsap.to(titleRef.current, {
-        opacity: 0,
-        y: -100,
-        ease: 'power1.inOut',
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: 'top top',
-          end: '+=1500', 
-          scrub: true,
-        }
-      })
+      if (!reducedMotion) {
+        gsap.to(titleRef.current, {
+          opacity: 0,
+          y: -100,
+          ease: 'power1.inOut',
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: 'top top',
+            end: `+=${Math.min(pinDuration * 0.25, 1500)}`,
+            scrub: true,
+          }
+        })
+      }
 
-      // Handle window resizes
       const handleResize = () => {
-        canvas.width = window.innerWidth
-        canvas.height = window.innerHeight
+        resizeCanvas()
         render(playhead.frame)
+        ScrollTrigger.refresh()
       }
       window.addEventListener('resize', handleResize)
       return () => window.removeEventListener('resize', handleResize)

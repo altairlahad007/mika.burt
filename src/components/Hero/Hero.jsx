@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react'
 import { gsap } from 'gsap'
 import centerImage from '../../assets/images/9.png'
 import styles from './Hero.module.css'
+import { getHeroZoomScale, prefersReducedMotion } from '../../utils/responsive'
 import { useHeroAnimation } from '../../hooks/useHeroAnimation'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
@@ -44,14 +45,17 @@ function Hero({ theme, toggleTheme }) {
   // Pinned scroll zoom effect
   useEffect(() => {
     if (!heroRef.current) return
+    if (prefersReducedMotion()) return
+
+    const zoomScale = getHeroZoomScale()
 
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: heroRef.current,
         start: 'top top',
-        end: '+=150%', // the scrolling distance over which the animation occurs
+        end: '+=150%',
         pin: true,
-        scrub: 1, // smooth scrubbing
+        scrub: 1,
       }
     })
 
@@ -59,11 +63,10 @@ function Hero({ theme, toggleTheme }) {
     const fullscreenBg = heroRef.current.querySelector('.hero-fullscreen-bg')
     const fullscreenImg = heroRef.current.querySelector('[class*="fullscreenImage"]')
 
-    // Zoom in the center piece and fade out
     tl.fromTo(centerPiece,
       { scale: 1, opacity: 1 },
       {
-        scale: 6, // massive zoom
+        scale: zoomScale,
         opacity: 0,
         duration: 0.6,
         ease: 'power2.in'

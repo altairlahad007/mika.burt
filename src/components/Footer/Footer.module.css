@@ -1,9 +1,9 @@
 .footer {
   background: var(--color-background);
-  padding: 150px 80px 40px;
+  padding: clamp(60px, 12vw, 150px) clamp(20px, 5vw, 80px) calc(40px + var(--safe-bottom));
   color: var(--color-text);
   position: relative;
-  z-index: 2; /* Ensure it stays above the shrinking canvas of the Portfolio */
+  z-index: 2;
 }
 
 .container {
@@ -48,12 +48,13 @@
 
 .email {
   font-family: var(--font-family-base);
-  font-size: 2rem;
+  font-size: clamp(1.25rem, 4vw, 2rem);
   color: var(--color-text);
   text-decoration: none;
   margin-bottom: 40px;
   position: relative;
   transition: color 0.3s ease;
+  word-break: break-word;
 }
 
 .email::after {
@@ -173,23 +174,35 @@
   inset: 0;
   background: rgba(0, 0, 0, 0.5);
   backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
   z-index: 1000;
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: var(--safe-top) var(--safe-right) var(--safe-bottom) var(--safe-left);
   animation: fadeIn 0.3s ease;
 }
 
 .modalContent {
   background: var(--color-surface);
   border: 1px solid var(--color-border);
-  padding: 3rem;
+  padding: clamp(1.5rem, 5vw, 3rem);
   border-radius: 1rem;
   max-width: 600px;
-  width: 90%;
+  width: min(90%, calc(100% - 2rem));
+  max-height: calc(var(--viewport-height) - 2rem);
+  overflow-y: auto;
   position: relative;
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
   animation: slideUp 0.3s ease;
+  color: var(--color-text);
+}
+
+.modalTitle {
+  font-family: var(--font-family-heading);
+  font-size: clamp(1.5rem, 4vw, 2rem);
+  margin-top: 0;
+  margin-bottom: 1.5rem;
   color: var(--color-text);
 }
 
@@ -206,14 +219,6 @@
 }
 
 .closeBtn:hover {
-  color: var(--color-text);
-}
-
-.modalTitle {
-  font-family: var(--font-family-heading);
-  font-size: 2rem;
-  margin-top: 0;
-  margin-bottom: 1.5rem;
   color: var(--color-text);
 }
 

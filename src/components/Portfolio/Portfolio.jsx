@@ -1,54 +1,201 @@
 import React, { useState, useMemo } from 'react'
 import styles from './Portfolio.module.css'
 import PortfolioModal from './PortfolioModal'
+import SubPortfolioModal from './SubPortfolioModal'
 
 // Dynamically load all images from portfolio subdirectories
-const imageModules = import.meta.glob('../../assets/portfolio/**/*.{jpg,jpeg,png,webp}', { eager: true })
+// Use a pattern that works reliably on Windows
+const imageModules = import.meta.glob([
+  '../../assets/portfolio/*.{jpg,jpeg,png,webp}',
+  '../../assets/portfolio/**/*.{jpg,jpeg,png,webp}'
+], { eager: true })
+
+// ─── Debug: log the first few raw paths so we know what Vite actually returns ─
+const allGlobKeys = Object.keys(imageModules)
+const amountAmongGlob = allGlobKeys.filter(key => key.includes('AMONG')).slice(0, 2);
+const parsedAmountAmongGlob = amountAmongGlob.map(k => {
+  const decoded = decodeURIComponent(k.replace(/\\/g, '/'))
+  const idx = decoded.lastIndexOf('/portfolio/')
+  if (idx !== -1) {
+    return decoded.slice(idx + '/portfolio/'.length).split('/').filter(p => p)
+  }
+  return 'ERROR'
+});
+
+window.__globalPortfolioDebug = {
+  totalGlobKeys: allGlobKeys.length,
+  amountAmongRaw: amountAmongGlob,
+  amountAmongParsed: parsedAmountAmongGlob
+};
+
+console.log('[Portfolio GLOBAL GLOB DEBUG]', window.__globalPortfolioDebug);
+
+// ─── Path parser ───────────────────────────────────────────────────────────────
+// Vite returns relative paths like: ../../assets/portfolio/FOO/BAR/1.jpg
+// We need to extract the portfolio structure: FOO, BAR, 1.jpg
+function parsePath(rawPath) {
+  const decoded = decodeURIComponent(rawPath.replace(/\\/g, '/'))
+  
+  // Try to find 'portfolio/' marker (with or without leading slash)
+  let match = decoded.match(/\/portfolio\/(.+)$/)
+  if (match) {
+    return match[1].split('/').filter(p => p)
+  }
+  
+  // Fallback: look for 'portfolio/' without leading slash (Vite relative paths)
+  match = decoded.match(/portfolio\/(.+)$/)
+  if (match) {
+    return match[1].split('/').filter(p => p)
+  }
+  
+  // Last resort: strip known prefixes
+  const fallback = decoded.replace(/^.*portfolio[\\/]?/, '')
+  return fallback.split('/').filter(p => p)
+}
 
 function Portfolio() {
   const [selectedPortfolio, setSelectedPortfolio] = useState(null)
+  const [subPortfolioParent, setSubPortfolioParent] = useState(null)
 
-  // Parse paths and group by portfolio name
   const portfolios = useMemo(() => {
-    const pMap = {}
+    try {
+      const pMap = {}
+      const allKeys = Object.keys(imageModules)
 
-    for (const [path, module] of Object.entries(imageModules)) {
-      // Path format: ../../assets/portfolio/AMONG THE HIDDEN/1ST SCULPTURE/1.jpeg
-      const relativePath = path.replace('../../assets/portfolio/', '')
-      const parts = relativePath.split('/')
-      const portfolioName = parts[0]
-      const fileName = parts[parts.length - 1]
-      const url = module.default
+      // DEBUG: Log glob results for inspection
+      const amountAmongKeys = allKeys.filter(k => k.includes('AMONG')).slice(0, 5);
+      const parsedAmongKeys = amountAmongKeys.map(k => ({
+        raw: k,
+        parsed: parsePath(k)
+      }));
+      
+      // Store in window for browser inspection
+      window.__portfolioGlobDebug = {
+        totalKeys: allKeys.length,
+        amountAmongRaw: amountAmongKeys,
+        amountAmongParsed: parsedAmongKeys
+      };
+      
+      // Log to console
+      console.log('[Portfolio GLOB DEBUG]', window.__portfolioGlobDebug);
+      
+      // Known nested portfolios - FORCE THESE TO BE NESTED REGARDLESS
+      const knownNested = ['AMONG THE HIDDEN', 'MINIATURE FIGURES', 'PORCELAIN']
 
-      if (!pMap[portfolioName]) {
-        pMap[portfolioName] = {
-          title: portfolioName,
+      // ── Initialize all portfolios
+      for (const nestedName of knownNested) {
+        pMap[nestedName] = {
+          title: nestedName,
           images: [],
-          displayImage: null
+          displayImage: null,
+          isNested: true,
+          subPortfolios: {}
         }
       }
 
-      pMap[portfolioName].images.push(url)
+      // ── Process all images
+      for (const [rawPath, module] of Object.entries(imageModules)) {
+        const url = module.default
+        const parts = parsePath(rawPath)
+        
+        if (parts.length < 1) continue
 
-      if (fileName.toUpperCase().startsWith('DISPLAY IMAGE')) {
-        pMap[portfolioName].displayImage = url
+        const portfolioName = parts[0]
+        const fileName = parts[parts.length - 1]
+
+        // Initialize portfolio if not exists
+        if (!pMap[portfolioName]) {
+          pMap[portfolioName] = {
+            title: portfolioName,
+            images: [],
+            displayImage: null,
+            isNested: knownNested.includes(portfolioName),
+            subPortfolios: {}
+          }
+        }
+
+        // If portfolio is known nested AND has 3+ parts, organize into subPortfolios
+        if (knownNested.includes(portfolioName) && parts.length >= 3) {
+          const subFolderName = parts[1]
+
+          if (!pMap[portfolioName].subPortfolios[subFolderName]) {
+            pMap[portfolioName].subPortfolios[subFolderName] = {
+              title: subFolderName,
+              images: [],
+              displayImage: null
+            }
+          }
+
+          const sub = pMap[portfolioName].subPortfolios[subFolderName]
+
+          if (fileName.toUpperCase().startsWith('DISPLAY IMAGE')) {
+            sub.displayImage = url
+            if (!pMap[portfolioName].displayImage) {
+              pMap[portfolioName].displayImage = url
+            }
+          } else {
+            sub.images.push(url)
+          }
+        } else {
+          // Flat: add to main portfolio images
+          if (fileName.toUpperCase().startsWith('DISPLAY IMAGE')) {
+            pMap[portfolioName].displayImage = url
+          } else {
+            pMap[portfolioName].images.push(url)
+          }
+        }
       }
+
+      // ── Finalize: sort and prepare subPortfolioList
+      const pList = Object.values(pMap).map(p => {
+        if (p.isNested) {
+          const subList = Object.values(p.subPortfolios).map(sub => {
+            if (!sub.displayImage && sub.images.length > 0) {
+              sub.displayImage = sub.images[0]
+            }
+            // Sort images numerically
+            sub.images.sort((a, b) => {
+              const numA = parseInt(a.match(/(\d+)\.\w+$/)?.[1] ?? '0', 10)
+              const numB = parseInt(b.match(/(\d+)\.\w+$/)?.[1] ?? '0', 10)
+              return numA - numB
+            })
+            return sub
+          })
+          subList.sort((a, b) => a.title.localeCompare(b.title))
+          p.subPortfolioList = subList
+          if (!p.displayImage && subList.length > 0) {
+            p.displayImage = subList[0].displayImage
+          }
+        } else {
+          if (!p.displayImage && p.images.length > 0) {
+            p.displayImage = p.images[0]
+          }
+          p.images.sort((a, b) => {
+            const numA = parseInt(a.match(/(\d+)\.\w+$/)?.[1] ?? '0', 10)
+            const numB = parseInt(b.match(/(\d+)\.\w+$/)?.[1] ?? '0', 10)
+            return numA - numB
+          })
+        }
+        return p
+      })
+
+      pList.sort((a, b) => a.title.localeCompare(b.title))
+      return pList
+    } catch (err) {
+      console.error('[Portfolio] useMemo crashed:', err)
+      return []
     }
-
-    // Fallback display image and sort images
-    const pList = Object.values(pMap).map(p => {
-      if (!p.displayImage && p.images.length > 0) {
-        p.displayImage = p.images[0]
-      }
-      p.images.sort()
-      return p
-    })
-
-    // Sort portfolios alphabetically
-    pList.sort((a, b) => a.title.localeCompare(b.title))
-
-    return pList
   }, [])
+
+  const handleCardClick = (portfolio) => {
+    console.log('[Portfolio] Card clicked:', portfolio.title, 'isNested:', portfolio.isNested, 'subPortfolioList:', portfolio.subPortfolioList?.length || 0)
+    window.__lastClickedPortfolio__ = portfolio
+    if (portfolio.isNested) {
+      setSubPortfolioParent(portfolio)
+    } else {
+      setSelectedPortfolio(portfolio)
+    }
+  }
 
   return (
     <section id="portfolio" className={styles.portfolioSection}>
@@ -63,7 +210,7 @@ function Portfolio() {
             <div
               key={idx}
               className={styles.card}
-              onClick={() => setSelectedPortfolio(portfolio)}
+              onClick={() => handleCardClick(portfolio)}
             >
               <div className={styles.thumbnailContainer}>
                 {portfolio.displayImage && (
@@ -82,10 +229,21 @@ function Portfolio() {
         </div>
       </div>
 
+      {/* Sub-portfolio picker (e.g. AMONG THE HIDDEN → 3 sculpture cards) */}
+      {subPortfolioParent && (
+        <SubPortfolioModal
+          parent={subPortfolioParent}
+          onSelectSub={(sub) => setSelectedPortfolio(sub)}
+          onClose={() => setSubPortfolioParent(null)}
+        />
+      )}
+
+      {/* Full image slideshow modal */}
       {selectedPortfolio && (
         <PortfolioModal
           portfolio={selectedPortfolio}
           onClose={() => setSelectedPortfolio(null)}
+          onBack={subPortfolioParent ? () => setSelectedPortfolio(null) : null}
         />
       )}
     </section>

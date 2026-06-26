@@ -1,11 +1,11 @@
 .portfolioSection {
-  padding: var(--space-24) 0;
+  padding: clamp(var(--space-16), 8vw, var(--space-24)) 0;
   background: var(--color-background);
-  min-height: 100vh;
+  min-height: var(--viewport-height);
 }
 
 .header {
-  margin-bottom: var(--space-16);
+  margin-bottom: clamp(var(--space-8), 5vw, var(--space-16));
   display: flex;
   align-items: center;
   gap: var(--space-8);
@@ -13,11 +13,10 @@
 
 .title {
   font-family: var(--font-family-heading);
-  font-size: var(--font-size-3xl);
+  font-size: clamp(var(--font-size-xl), 4vw, var(--font-size-3xl));
   font-weight: var(--font-weight-normal);
   letter-spacing: 0.1em;
   color: var(--color-text);
-  white-space: nowrap;
 }
 
 .headerLine {
@@ -28,8 +27,8 @@
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: var(--space-8);
+  grid-template-columns: repeat(auto-fill, minmax(min(260px, 100%), 1fr));
+  gap: clamp(var(--space-4), 3vw, var(--space-8));
 }
 
 .card {
@@ -75,7 +74,7 @@
 
 .cardTitle {
   font-family: var(--font-family-heading);
-  font-size: var(--font-size-xl);
+  font-size: clamp(var(--font-size-base), 2.5vw, var(--font-size-xl));
   color: #ffffff;
   font-weight: var(--font-weight-bold);
   letter-spacing: 0.1em;
@@ -88,4 +87,37 @@
 
 .card:hover .cardTitle {
   transform: translateY(0);
+}
+
+@media (hover: none), (pointer: coarse) {
+  .overlay {
+    opacity: 1;
+    background: linear-gradient(
+      to top,
+      rgba(0, 0, 0, 0.75) 0%,
+      rgba(0, 0, 0, 0.15) 45%,
+      transparent 100%
+    );
+    align-items: flex-end;
+    padding-bottom: 1rem;
+  }
+
+  .cardTitle {
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: repeat(auto-fill, minmax(min(160px, 100%), 1fr));
+    gap: var(--space-4);
+  }
+}
+
+@media (max-width: 480px) {
+  .grid {
+    grid-template-columns: 1fr;
+    max-width: 400px;
+    margin: 0 auto;
+  }
 }

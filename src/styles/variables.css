@@ -60,6 +60,13 @@
   /* Layout */
   --container-max: 1200px;
   --container-padding: var(--space-6);
+  --header-height: 5rem;
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-right: env(safe-area-inset-right, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-left: env(safe-area-inset-left, 0px);
+  --viewport-height: 100vh;
+  --viewport-height-small: 100svh;
 
   /* Breakpoints (for reference in JS) */
   --breakpoint-sm: 640px;
@@ -127,5 +134,18 @@
 @media (min-width: 1024px) {
   :root {
     --container-padding: var(--space-12);
+  }
+}
+
+@supports (height: 100dvh) {
+  :root {
+    --viewport-height: 100dvh;
+    --viewport-height-small: 100svh;
+  }
+}
+
+@media (max-width: 768px) {
+  :root {
+    --header-height: 4.5rem;
   }
 }

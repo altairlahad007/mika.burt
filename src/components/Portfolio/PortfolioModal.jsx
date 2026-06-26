@@ -42,7 +42,7 @@ const PORTFOLIO_TEXT = {
   }
 };
 
-export default function PortfolioModal({ portfolio, onClose }) {
+export default function PortfolioModal({ portfolio, onClose, onBack }) {
   const [imagesLoaded, setImagesLoaded] = useState(false);
   const [progress, setProgress] = useState(0);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -143,6 +143,14 @@ export default function PortfolioModal({ portfolio, onClose }) {
       <button className={styles.closeButton} onClick={onClose} aria-label="Close modal">
         ✕
       </button>
+
+      {/* Back button — returns to sub-portfolio picker */}
+      {onBack && (
+        <button className={styles.backButton} onClick={onBack} aria-label="Back to collection">
+          &#8592; Back
+        </button>
+      )}
+
       <h2 className={styles.modalTitle}>{portfolio.title}</h2>
 
       <div 

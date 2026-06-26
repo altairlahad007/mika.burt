@@ -7,13 +7,14 @@ function App() {
   const lenisRef = useRef(null)
 
   useEffect(() => {
-    // Initialize Lenis smooth scroll
+    const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0
+
     const lenis = new Lenis({
-      duration: 1.2,
+      duration: isTouchDevice ? 0.8 : 1.2,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       orientation: 'vertical',
       smoothWheel: true,
-      touchMultiplier: 2,
+      touchMultiplier: isTouchDevice ? 1.2 : 2,
     })
 
     lenisRef.current = lenis

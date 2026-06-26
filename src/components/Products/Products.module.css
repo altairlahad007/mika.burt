@@ -1,24 +1,24 @@
 .productsSection {
   position: relative;
   background: var(--color-background);
-  min-height: 100vh;
+  min-height: var(--viewport-height);
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  padding: 80px 0;
+  padding: clamp(60px, 10vw, 80px) 0;
 }
 
 .header {
-  padding: 0 80px;
-  margin-bottom: 60px;
+  padding: 0 clamp(20px, 5vw, 80px);
+  margin-bottom: clamp(32px, 5vw, 60px);
   display: flex;
   align-items: center;
-  gap: 30px;
+  gap: clamp(16px, 3vw, 30px);
 }
 
 .sectionTitle {
   font-family: var(--font-family-heading);
-  font-size: clamp(2rem, 5vw, 4rem);
+  font-size: clamp(1.5rem, 5vw, 4rem);
   font-weight: var(--font-weight-bold);
   color: var(--color-text);
   margin: 0;
@@ -34,7 +34,7 @@
 
 .scrollContainer {
   position: relative;
-  width: 100vw;
+  width: 100%;
   height: 100%;
   display: flex;
   align-items: center;
@@ -44,17 +44,16 @@
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
-  gap: 40px;
-  padding: 0 80px;
-  /* Will be animated horizontally by GSAP */
+  gap: clamp(20px, 3vw, 40px);
+  padding: 0 clamp(20px, 5vw, 80px);
   will-change: transform;
 }
 
 .card {
   position: relative;
-  flex: 0 0 450px;
-  width: 450px;
-  height: 550px;
+  flex: 0 0 clamp(260px, 28vw, 450px);
+  width: clamp(260px, 28vw, 450px);
+  height: clamp(380px, 55vw, 550px);
   display: flex;
   flex-direction: column;
   border: 1px solid var(--color-border);
@@ -103,7 +102,7 @@
 
 .cardTitle {
   font-family: var(--font-family-heading);
-  font-size: 2rem;
+  font-size: clamp(1.25rem, 2.5vw, 2rem);
   color: #ffffff;
   margin: 0;
   text-transform: uppercase;
@@ -118,46 +117,58 @@
   transform: translateY(0);
 }
 
-@media (max-width: 1024px) {
-  .header {
-    padding: 0 40px;
+/* Touch devices: always show titles */
+@media (hover: none), (pointer: coarse) {
+  .overlay {
+    opacity: 1;
+    background: linear-gradient(
+      to top,
+      rgba(0, 0, 0, 0.75) 0%,
+      rgba(0, 0, 0, 0.15) 45%,
+      transparent 100%
+    );
+    align-items: flex-end;
+    padding-bottom: 1.25rem;
   }
-  .cardsWrapper {
-    padding: 0 40px;
+
+  .cardTitle {
+    transform: translateY(0);
   }
-  .card {
-    flex: 0 0 380px;
-    width: 380px;
-    height: 500px;
+
+  .card:hover {
+    transform: none;
   }
 }
 
+/* Mobile: vertical grid instead of horizontal pin scroll */
 @media (max-width: 768px) {
-  .header {
-    padding: 0 20px;
+  .productsSection {
+    min-height: auto;
+    overflow: visible;
   }
+
+  .scrollContainer {
+    height: auto;
+  }
+
   .cardsWrapper {
-    padding: 0 20px;
-    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+    transform: none !important;
   }
+
   .card {
-    flex: 0 0 300px;
-    width: 300px;
-    height: 450px;
-  }
-  .cardTitle {
-    font-size: 1.5rem;
+    flex: 0 0 calc(50% - 10px);
+    width: calc(50% - 10px);
+    height: auto;
+    aspect-ratio: 3 / 4;
   }
 }
 
 @media (max-width: 480px) {
   .card {
-    flex: 0 0 85vw;
-    width: 85vw;
-    height: 60vh;
-  }
-  .sectionTitle {
-    font-size: clamp(1.5rem, 8vw, 2rem);
+    flex: 0 0 100%;
+    width: 100%;
+    max-width: 400px;
   }
 }
-

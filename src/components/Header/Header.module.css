@@ -1,13 +1,15 @@
 .header {
   position: fixed;
-  top: 0;
+  top: var(--safe-top);
   left: 0;
   width: 100%;
   z-index: 1000;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 1.5rem 4rem;
+  padding: 1.5rem clamp(1rem, 4vw, 4rem);
+  padding-left: calc(clamp(1rem, 4vw, 4rem) + var(--safe-left));
+  padding-right: calc(clamp(1rem, 4vw, 4rem) + var(--safe-right));
   transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
@@ -43,7 +45,7 @@
 
 .logoSubtitle {
   font-family: var(--font-family-base);
-  font-size: 0.5rem;
+  font-size: clamp(0.55rem, 1.5vw, 0.65rem);
   font-weight: var(--font-weight-semibold);
   letter-spacing: 0.2em;
   text-transform: uppercase;
@@ -153,8 +155,9 @@
   position: fixed;
   top: 0;
   left: 0;
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
+  height: var(--viewport-height);
   background: var(--color-background);
   z-index: 2000;
   display: flex;
@@ -163,6 +166,7 @@
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.3s ease;
+  padding: calc(var(--header-height) + var(--safe-top)) var(--safe-right) var(--safe-bottom) var(--safe-left);
 }
 
 .mobileMenuOverlay.open {
@@ -195,6 +199,21 @@
 }
 
 @media (max-width: 768px) {
+  .header {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+  }
+
+  .header.scrolled {
+    top: calc(0.5rem + var(--safe-top));
+    width: calc(100% - 1rem - var(--safe-left) - var(--safe-right));
+    padding: 0.65rem 1.25rem;
+  }
+
+  .logo {
+    font-size: var(--font-size-lg);
+  }
+
   .navCenter {
     display: none;
   }
@@ -202,5 +221,15 @@
     display: flex;
     align-items: center;
     justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .mobileNavLink {
+    font-size: var(--font-size-xl);
+  }
+
+  .mobileNavList {
+    gap: 1.5rem;
   }
 }
