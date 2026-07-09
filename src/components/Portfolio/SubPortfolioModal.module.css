@@ -31,8 +31,13 @@
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to   { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
 /* ── Close button ─────────────────────────────────────── */
@@ -41,7 +46,7 @@
   top: calc(var(--space-6, 24px) + var(--safe-top));
   right: calc(var(--space-6, 24px) + var(--safe-right));
   background: var(--color-surface, #1a1a1a);
-  border: 1px solid var(--color-border, rgba(255,255,255,0.12));
+  border: 1px solid var(--color-border, rgba(255, 255, 255, 0.12));
   border-radius: 50%;
   width: 50px;
   height: 50px;
@@ -53,7 +58,7 @@
   cursor: pointer;
   z-index: calc(var(--z-modal, 1400) + 102);
   transition: transform 0.2s ease, background 0.2s ease;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
 }
 
 .closeButton:hover {
@@ -71,7 +76,7 @@
   font-size: clamp(1rem, 2.5vw, 2rem);
   font-weight: var(--font-weight-normal, 400);
   color: #fff;
-  text-shadow: 0 2px 10px rgba(0,0,0,0.8);
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
   text-transform: uppercase;
   letter-spacing: 0.14em;
   white-space: nowrap;
@@ -140,31 +145,64 @@
   border-radius: 12px;
   overflow: hidden;
   position: relative;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.5);
-  border: 1px solid rgba(255,255,255,0.07);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.07);
   transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1),
-              box-shadow 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+    box-shadow 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
   animation: cardIn 0.5s ease both;
 }
 
-.card:nth-child(1) { animation-delay: 0.05s; }
-.card:nth-child(2) { animation-delay: 0.10s; }
-.card:nth-child(3) { animation-delay: 0.15s; }
-.card:nth-child(4) { animation-delay: 0.20s; }
-.card:nth-child(5) { animation-delay: 0.25s; }
-.card:nth-child(6) { animation-delay: 0.30s; }
-.card:nth-child(7) { animation-delay: 0.35s; }
-.card:nth-child(8) { animation-delay: 0.40s; }
-.card:nth-child(9) { animation-delay: 0.45s; }
+.card:nth-child(1) {
+  animation-delay: 0.05s;
+}
+
+.card:nth-child(2) {
+  animation-delay: 0.10s;
+}
+
+.card:nth-child(3) {
+  animation-delay: 0.15s;
+}
+
+.card:nth-child(4) {
+  animation-delay: 0.20s;
+}
+
+.card:nth-child(5) {
+  animation-delay: 0.25s;
+}
+
+.card:nth-child(6) {
+  animation-delay: 0.30s;
+}
+
+.card:nth-child(7) {
+  animation-delay: 0.35s;
+}
+
+.card:nth-child(8) {
+  animation-delay: 0.40s;
+}
+
+.card:nth-child(9) {
+  animation-delay: 0.45s;
+}
 
 @keyframes cardIn {
-  from { opacity: 0; transform: translateY(24px) scale(0.97); }
-  to   { opacity: 1; transform: translateY(0)   scale(1); }
+  from {
+    opacity: 0;
+    transform: translateY(24px) scale(0.97);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 
 .card:hover {
   transform: translateY(-6px) scale(1.025);
-  box-shadow: 0 20px 56px rgba(0,0,0,0.7);
+  box-shadow: 0 20px 56px rgba(0, 0, 0, 0.7);
 }
 
 /* ── Card image ───────────────────────────────────────── */
@@ -190,39 +228,36 @@
 .cardOverlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    to top,
-    rgba(0,0,0,0.75) 0%,
-    rgba(0,0,0,0.2)  50%,
-    transparent      100%
-  );
+  background: linear-gradient(to top,
+      rgba(0, 0, 0, 0.75) 0%,
+      rgba(0, 0, 0, 0.2) 50%,
+      transparent 100%);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-end;
-  padding: 28px 20px;
+  /* padding: 52px 20px; */
   gap: 6px;
   transition: background 0.35s ease;
 }
 
 .card:hover .cardOverlay {
-  background: linear-gradient(
-    to top,
-    rgba(0,0,0,0.88) 0%,
-    rgba(0,0,0,0.3)  55%,
-    transparent      100%
-  );
+  background: linear-gradient(to top,
+      rgba(0, 0, 0, 0.88) 0%,
+      rgba(0, 0, 0, 0.3) 55%,
+      transparent 100%);
 }
 
 .cardLabel {
   font-family: var(--font-family-heading, 'Cormorant Garamond', serif);
-  font-size: clamp(0.7rem, 1.2vw, 0.9rem);
+  font-size: clamp(0.6rem, 1vw, 0.75rem);
   font-weight: 600;
   color: #fff;
   text-transform: uppercase;
   letter-spacing: 0.12em;
-  text-align: center;
-  text-shadow: 0 2px 8px rgba(0,0,0,0.6);
+  text-align: left;
+  padding: 10px;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
   transform: translateY(4px);
   transition: transform 0.35s ease;
 }
@@ -234,7 +269,7 @@
 .cardCount {
   font-family: var(--font-family-base, sans-serif);
   font-size: 0.75rem;
-  color: rgba(255,255,255,0.55);
+  color: rgba(255, 255, 255, 0.55);
   letter-spacing: 0.1em;
   text-transform: uppercase;
   transition: opacity 0.35s ease;
@@ -270,6 +305,10 @@
   .card {
     max-width: none;
   }
+
+  /* .cardOverlay {
+    padding: 32px 16px;
+  } */
 
   .title {
     font-size: 1rem;

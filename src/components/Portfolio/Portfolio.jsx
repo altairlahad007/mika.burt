@@ -28,26 +28,24 @@ window.__globalPortfolioDebug = {
   amountAmongParsed: parsedAmountAmongGlob
 };
 
-console.log('[Portfolio GLOBAL GLOB DEBUG]', window.__globalPortfolioDebug);
-
 // ─── Path parser ───────────────────────────────────────────────────────────────
 // Vite returns relative paths like: ../../assets/portfolio/FOO/BAR/1.jpg
 // We need to extract the portfolio structure: FOO, BAR, 1.jpg
 function parsePath(rawPath) {
   const decoded = decodeURIComponent(rawPath.replace(/\\/g, '/'))
-  
+
   // Try to find 'portfolio/' marker (with or without leading slash)
   let match = decoded.match(/\/portfolio\/(.+)$/)
   if (match) {
     return match[1].split('/').filter(p => p)
   }
-  
+
   // Fallback: look for 'portfolio/' without leading slash (Vite relative paths)
   match = decoded.match(/portfolio\/(.+)$/)
   if (match) {
     return match[1].split('/').filter(p => p)
   }
-  
+
   // Last resort: strip known prefixes
   const fallback = decoded.replace(/^.*portfolio[\\/]?/, '')
   return fallback.split('/').filter(p => p)
@@ -68,17 +66,17 @@ function Portfolio() {
         raw: k,
         parsed: parsePath(k)
       }));
-      
+
       // Store in window for browser inspection
       window.__portfolioGlobDebug = {
         totalKeys: allKeys.length,
         amountAmongRaw: amountAmongKeys,
         amountAmongParsed: parsedAmongKeys
       };
-      
+
       // Log to console
       console.log('[Portfolio GLOB DEBUG]', window.__portfolioGlobDebug);
-      
+
       // Known nested portfolios - FORCE THESE TO BE NESTED REGARDLESS
       const knownNested = ['AMONG THE HIDDEN', 'MINIATURE FIGURES', 'PORCELAIN']
 
@@ -97,7 +95,7 @@ function Portfolio() {
       for (const [rawPath, module] of Object.entries(imageModules)) {
         const url = module.default
         const parts = parsePath(rawPath)
-        
+
         if (parts.length < 1) continue
 
         const portfolioName = parts[0]
