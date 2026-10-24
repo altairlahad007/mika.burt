@@ -2,6 +2,7 @@ import React, { useState, useMemo } from 'react'
 import styles from './Portfolio.module.css'
 import PortfolioModal from './PortfolioModal'
 import SubPortfolioModal from './SubPortfolioModal'
+import portfolioData from '../../data/portfolioData.json'
 
 // Dynamically load all images from portfolio subdirectories
 // Use a pattern that works reliably on Windows
@@ -77,17 +78,41 @@ function Portfolio() {
       // Log to console
       console.log('[Portfolio GLOB DEBUG]', window.__portfolioGlobDebug);
 
-      // Known nested portfolios - FORCE THESE TO BE NESTED REGARDLESS
+      // Known nested portfolios
       const knownNested = ['AMONG THE HIDDEN', 'MINIATURE FIGURES', 'PORCELAIN']
 
-      // ── Initialize all portfolios
-      for (const nestedName of knownNested) {
-        pMap[nestedName] = {
-          title: nestedName,
+      // ── Initialize all portfolios from portfolioData.json AND knownNested
+      for (const [title, data] of Object.entries(portfolioData || {})) {
+        pMap[title] = {
+          title: data.title || title,
           images: [],
           displayImage: null,
-          isNested: true,
+          isNested: data.isNested || knownNested.includes(title),
+          textData: data.textData || {},
           subPortfolios: {}
+        };
+        if (data.subPortfolios) {
+          for (const [subTitle, subData] of Object.entries(data.subPortfolios)) {
+            pMap[title].subPortfolios[subTitle] = {
+              title: subData.title || subTitle,
+              images: [],
+              displayImage: null,
+              textData: subData.textData || {}
+            };
+          }
+        }
+      }
+
+      for (const nestedName of knownNested) {
+        if (!pMap[nestedName]) {
+          pMap[nestedName] = {
+            title: nestedName,
+            images: [],
+            displayImage: null,
+            isNested: true,
+            textData: portfolioData?.[nestedName]?.textData || {},
+            subPortfolios: {}
+          }
         }
       }
 
@@ -101,26 +126,30 @@ function Portfolio() {
         const portfolioName = parts[0]
         const fileName = parts[parts.length - 1]
 
+        const isKnownNested = knownNested.includes(portfolioName) || pMap[portfolioName]?.isNested
+
         // Initialize portfolio if not exists
         if (!pMap[portfolioName]) {
           pMap[portfolioName] = {
             title: portfolioName,
             images: [],
             displayImage: null,
-            isNested: knownNested.includes(portfolioName),
+            isNested: isKnownNested,
+            textData: portfolioData?.[portfolioName]?.textData || {},
             subPortfolios: {}
           }
         }
 
-        // If portfolio is known nested AND has 3+ parts, organize into subPortfolios
-        if (knownNested.includes(portfolioName) && parts.length >= 3) {
+        // If portfolio is nested AND has 3+ parts, organize into subPortfolios
+        if (isKnownNested && parts.length >= 3) {
           const subFolderName = parts[1]
 
           if (!pMap[portfolioName].subPortfolios[subFolderName]) {
             pMap[portfolioName].subPortfolios[subFolderName] = {
               title: subFolderName,
               images: [],
-              displayImage: null
+              displayImage: null,
+              textData: portfolioData?.[portfolioName]?.subPortfolios?.[subFolderName]?.textData || {}
             }
           }
 

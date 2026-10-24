@@ -229,22 +229,25 @@
   position: absolute;
   inset: 0;
   background: linear-gradient(to top,
-      rgba(0, 0, 0, 0.75) 0%,
-      rgba(0, 0, 0, 0.2) 50%,
+      rgba(0, 0, 0, 0.85) 0%,
+      rgba(0, 0, 0, 0.3) 50%,
       transparent 100%);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-end;
-  /* padding: 52px 20px; */
   gap: 6px;
-  transition: background 0.35s ease;
+  opacity: 0;
+  transition: opacity 0.35s ease, background 0.35s ease;
 }
 
-.card:hover .cardOverlay {
+.card:hover .cardOverlay,
+.card:active .cardOverlay,
+.card:focus-visible .cardOverlay {
+  opacity: 1;
   background: linear-gradient(to top,
       rgba(0, 0, 0, 0.88) 0%,
-      rgba(0, 0, 0, 0.3) 55%,
+      rgba(0, 0, 0, 0.35) 55%,
       transparent 100%);
 }
 
@@ -258,26 +261,31 @@
   text-align: left;
   padding: 10px;
   text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
-  transform: translateY(4px);
-  transition: transform 0.35s ease;
+  transform: translateY(8px);
+  transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
-.card:hover .cardLabel {
+.card:hover .cardLabel,
+.card:active .cardLabel,
+.card:focus-visible .cardLabel {
   transform: translateY(0);
 }
 
 .cardCount {
   font-family: var(--font-family-base, sans-serif);
   font-size: 0.75rem;
-  color: rgba(255, 255, 255, 0.55);
+  color: rgba(255, 255, 255, 0.65);
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  transition: opacity 0.35s ease;
-  opacity: 0;
+  transition: opacity 0.35s ease, transform 0.35s ease;
+  transform: translateY(8px);
+  padding-bottom: 10px;
 }
 
-.card:hover .cardCount {
-  opacity: 1;
+.card:hover .cardCount,
+.card:active .cardCount,
+.card:focus-visible .cardCount {
+  transform: translateY(0);
 }
 
 /* ── Responsive ───────────────────────────────────────── */

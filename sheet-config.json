@@ -1,0 +1,4 @@
+{
+  "csvUrl": "",
+  "notes": "Paste your Published CSV URL from Google Sheets here (File -> Share -> Publish to web -> CSV). Or set the SHEET_CSV_URL environment variable."
+}

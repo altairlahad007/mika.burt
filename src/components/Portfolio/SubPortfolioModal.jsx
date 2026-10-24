@@ -39,7 +39,7 @@ export default function SubPortfolioModal({ parent, onSelectSub, onClose }) {
 
   if (!parent) return null
 
-  const description = DESCRIPTIONS[parent.title]
+  const description = (parent.textData && parent.textData.description && parent.textData.description.length > 0) ? parent.textData.description : DESCRIPTIONS[parent.title]
 
   return createPortal(
     <div

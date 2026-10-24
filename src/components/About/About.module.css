@@ -122,8 +122,12 @@
   font-family: var(--font-family-base);
   font-size: 1.125rem;
   line-height: 1.6;
-  color: var(--color-text-muted);
+  color: #000000;
   margin-bottom: 24px;
+}
+
+:global([data-theme='inverse']) .paragraph {
+  color: var(--color-text-muted);
 }
 
 .highlight {
