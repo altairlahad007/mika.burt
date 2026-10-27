@@ -1,13 +1,14 @@
-# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
-# More GitHub Actions for Azure: https://github.com/Azure/actions
-
-name: Build and deploy Node.js app to Azure Web App - mikaburt
+name: Build and deploy static site to Oracle Cloud - mikaburt
 
 on:
   push:
     branches:
       - master
   workflow_dispatch:
+
+env:
+  STAGING_DIR: ~/mikaburt-static # Staging dir in the SSH user's home
+  WEB_DIR: /var/www/mikaburt.com # Served by nginx/apache
 
 jobs:
   build-and-deploy:
@@ -23,22 +24,24 @@ jobs:
         with:
           node-version: '24.x'
 
-      - name: npm install, build, and test
+      - name: npm install and build
         run: |
           npm install
-          npm run build --if-present
-          npm run test --if-present
+          npm run build
 
-      - name: Stage deployment package
-        run: |
-          mkdir -p deploy
-          cp -r dist public src index.html package.json package-lock.json server.js sync-portfolio.js sheet-config.json vite.config.js deploy/
-
-      - name: 'Deploy to Azure Web App'
-        id: deploy-to-webapp
-        uses: azure/webapps-deploy@v3
+      - name: Set up SSH agent
+        uses: webfactory/ssh-agent@v0.9.0
         with:
-          app-name: 'mikaburt'
-          slot-name: 'Production'
-          package: deploy
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_FC9D3625C679481DBC7CFAB011F6A7BC }}
+          ssh-private-key: ${{ secrets.OCI_SSH_KEY }}
+
+      - name: Add instance to known_hosts
+        run: ssh-keyscan -H ${{ secrets.OCI_HOST }} >> ~/.ssh/known_hosts
+
+      - name: Upload build output to home staging dir
+        run: rsync -avz --delete dist/ ${{ secrets.OCI_USER }}@${{ secrets.OCI_HOST }}:${{ env.STAGING_DIR }}/
+
+      - name: Publish to web root
+        run: |
+          ssh ${{ secrets.OCI_USER }}@${{ secrets.OCI_HOST }} "
+            sudo rsync -a --delete ${{ env.STAGING_DIR }}/ ${{ env.WEB_DIR }}/
+          "
