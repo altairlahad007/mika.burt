@@ -211,7 +211,7 @@ export default function PortfolioModal({ portfolio, onClose, onBack }) {
         {imagesLoaded && textData && (
           <div className={styles.textOverlayWrapper}>
             <div className={`${styles.textOverlaySlide} ${!isTextVisible ? styles.hiddenText : ''}`}>
-              <div className={styles.textOverlayContent}>
+              <div className={styles.textOverlayContent} data-lenis-prevent>
                 {textData.subtitle && <h3 className={styles.subtitle}>{textData.subtitle}</h3>}
                 {textData.dimensions && <p className={styles.dimensions}>{textData.dimensions}</p>}
                 {textData.description && textData.description.map((p, i) => (

@@ -60,7 +60,7 @@ export default function SubPortfolioModal({ parent, onSelectSub, onClose }) {
       <h2 className={styles.title}>{parent.title}</h2>
 
       {/* Scrollable grid area */}
-      <div className={styles.content}>
+      <div className={styles.content} data-lenis-prevent>
         <div className={styles.layout}>
           <div className={styles.grid}>
             {parent.subPortfolioList.map((sub, idx) => (

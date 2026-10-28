@@ -1,6 +1,8 @@
 {
   "AMONG THE HIDDEN": {
     "title": "AMONG THE HIDDEN",
+    "order": 1,
+    "year": 2025,
     "isNested": true,
     "textData": {
       "dimensions": "DIMENSIONS: 30*32*43 CM, 46*32*42 CM, 77*35*42 CM /cone6 glaze on stoneware clay body/ 2025",
@@ -12,20 +14,28 @@
     "subPortfolios": {
       "30x32x43 CM - cone6 glaze on stoneware clay body - 2025": {
         "title": "30x32x43 CM - cone6 glaze on stoneware clay body - 2025",
+        "order": 1,
+        "year": 2025,
         "textData": {}
       },
       "46x32x42 CM - cone6 glaze on stoneware clay body - 2025": {
         "title": "46x32x42 CM - cone6 glaze on stoneware clay body - 2025",
+        "order": 2,
+        "year": 2025,
         "textData": {}
       },
       "77x35x42 CM - cone6 glaze on stoneware clay body - 2025": {
         "title": "77x35x42 CM - cone6 glaze on stoneware clay body - 2025",
+        "order": 3,
+        "year": 2025,
         "textData": {}
       }
     }
   },
   "INSIDE": {
     "title": "INSIDE",
+    "order": 2,
+    "year": 2025,
     "isNested": false,
     "textData": {
       "subtitle": "a wall installation pieces",
@@ -37,6 +47,8 @@
   },
   "MINIATURE FIGURES": {
     "title": "MINIATURE FIGURES",
+    "order": 3,
+    "year": 2026,
     "isNested": true,
     "textData": {
       "list": [
@@ -53,40 +65,58 @@
     "subPortfolios": {
       "BENDING HECTIC - 17x13x8 CM - WOOD-FIRED EARTHENWARE CLAY BODY - 2025": {
         "title": "BENDING HECTIC - 17x13x8 CM - WOOD-FIRED EARTHENWARE CLAY BODY - 2025",
+        "order": 1,
+        "year": 2025,
         "textData": {}
       },
       "RAKU1 - 12x11x10 CM - RAKU-FIRED STONEWARE CLAY BODY - 2025": {
         "title": "RAKU1 - 12x11x10 CM - RAKU-FIRED STONEWARE CLAY BODY - 2025",
+        "order": 2,
+        "year": 2025,
         "textData": {}
       },
       "RAKU2 - 13x11x8 CM - RAKU-FIRED STONEWARE CLAY BODY - 2025": {
         "title": "RAKU2 - 13x11x8 CM - RAKU-FIRED STONEWARE CLAY BODY - 2025",
+        "order": 3,
+        "year": 2025,
         "textData": {}
       },
       "RAKU3 - 10x11x7 CM - RAKU-FIRED STONEWARE CLAY BODY - 2025": {
         "title": "RAKU3 - 10x11x7 CM - RAKU-FIRED STONEWARE CLAY BODY - 2025",
+        "order": 4,
+        "year": 2025,
         "textData": {}
       },
       "RAKU4 - 10x9x7 CM - RAKU-FIRED STONEWARE CLAY BODY - 2025": {
         "title": "RAKU4 - 10x9x7 CM - RAKU-FIRED STONEWARE CLAY BODY - 2025",
+        "order": 5,
+        "year": 2025,
         "textData": {}
       },
       "SCARLET - 15x7x5 CM - PORCELAIN BODY WITH RED STAIN - 2026": {
         "title": "SCARLET - 15x7x5 CM - PORCELAIN BODY WITH RED STAIN - 2026",
+        "order": 6,
+        "year": 2026,
         "textData": {}
       },
       "THERE THERE - 13x12x7 CM - PORCELAIN BODY WITH RED STAIN - 2026": {
         "title": "THERE THERE - 13x12x7 CM - PORCELAIN BODY WITH RED STAIN - 2026",
+        "order": 7,
+        "year": 2026,
         "textData": {}
       },
       "TWIST - 10x6x5 CM - PORCELAIN BODY UPLIED WITH 14K GOLD LUSTER - 2026": {
         "title": "TWIST - 10x6x5 CM - PORCELAIN BODY UPLIED WITH 14K GOLD LUSTER - 2026",
+        "order": 8,
+        "year": 2026,
         "textData": {}
       }
     }
   },
   "DROP": {
     "title": "DROP",
+    "order": 4,
+    "year": 2025,
     "isNested": false,
     "textData": {
       "dimensions": "DIMENSIONS: 18*15*15 CM / PORCELAIN BODY APPLIED WITH 14K GOLD LUSTER / 2025"
@@ -94,6 +124,8 @@
   },
   "PORCELAIN": {
     "title": "PORCELAIN",
+    "order": 5,
+    "year": 2025,
     "isNested": true,
     "textData": {
       "list": [
@@ -105,25 +137,35 @@
     "subPortfolios": {
       "CONNECTION - 13x13x5 CM ; 10x10x2 CM - PORCELAIN BODY UPLIED WITH COBALT - 2025": {
         "title": "CONNECTION - 13x13x5 CM ; 10x10x2 CM - PORCELAIN BODY UPLIED WITH COBALT - 2025",
+        "order": 1,
+        "year": 2025,
         "textData": {}
       },
       "HIDDEN SEEDS - 12x9x4 CM - PORCELAIN BODY UPLIED WITH 14K GOLD LUSTER, MOTHER OF PEARL AND COBALT - 2025": {
         "title": "HIDDEN SEEDS - 12x9x4 CM - PORCELAIN BODY UPLIED WITH 14K GOLD LUSTER, MOTHER OF PEARL AND COBALT - 2025",
+        "order": 2,
+        "year": 2025,
         "textData": {}
       },
       "SILENT SCREAM VASE - 18x11x7 CM - PORCELAIN BODY UPLIED WITH COBALT - 2025": {
         "title": "SILENT SCREAM VASE - 18x11x7 CM - PORCELAIN BODY UPLIED WITH COBALT - 2025",
+        "order": 3,
+        "year": 2025,
         "textData": {}
       }
     }
   },
   "TABLE WARES": {
     "title": "TABLE WARES",
+    "order": 6,
+    "year": 2026,
     "isNested": false,
     "textData": {}
   },
   "A LIGHT WITHIN": {
     "title": "A LIGHT WITHIN",
+    "order": 7,
+    "year": 2026,
     "isNested": false,
     "textData": {
       "dimensions": "DIMENSIONS: 60*70*3 CM / SLIP CASTED AND CARVED JADE PORCELAIN / ON A WALL INSTALLATION, FIRED AT 1280'C REDUCTION FIRING",
@@ -135,6 +177,8 @@
   },
   "FRAGMENTS OF BECOMING": {
     "title": "FRAGMENTS OF BECOMING",
+    "order": 8,
+    "year": 2026,
     "isNested": false,
     "textData": {
       "dimensions": "DIMENSIONS: JADE PORCELAIN WITH CELADON, 14K GOLD LUSTER AND GOLD LEAVES / FIRED AT 1280'C REDUCTION FIRING",
@@ -147,6 +191,8 @@
   },
   "LINGER": {
     "title": "LINGER",
+    "order": 9,
+    "year": 2026,
     "isNested": false,
     "textData": {
       "dimensions": "DIMENSIONS: 30*17*25 CM / JADE PORCELAIN WITH RED STAIN AND JUCI / AT 1280'C REDUCTION FIRING",
@@ -160,6 +206,8 @@
   },
   "RED AND BLUE VELVET": {
     "title": "RED AND BLUE VELVET",
+    "order": 10,
+    "year": 2026,
     "isNested": false,
     "textData": {
       "dimensions": "DIMENSIONS: 63*26*26 CM / STONEWARE BODY AT 1240'C REDUCTION FIRING / FINISHED WITH SCARLET RED AND ULTRAMARINE BLUE FLOCK SURFACES",
@@ -172,6 +220,8 @@
   },
   "VESSEL": {
     "title": "VESSEL",
+    "order": 11,
+    "year": 2026,
     "isNested": false,
     "textData": {
       "dimensions": "DIMENSIONS: 47*22*18 CM / HAND-BUILDING JADE PORCELAIN WITH RED STAIN / HIGH-FIRED AT 1280'C REDUCTION FIRING",

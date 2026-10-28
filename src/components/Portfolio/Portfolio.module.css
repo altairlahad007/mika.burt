@@ -89,6 +89,23 @@
   transform: translateY(0);
 }
 
+.yearPill {
+  position: absolute;
+  top: var(--space-3);
+  right: var(--space-3);
+  z-index: 2;
+  padding: 0.25rem 0.75rem;
+  border-radius: var(--radius-full);
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  color: #ffffff;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: 0.1em;
+  pointer-events: none;
+}
+
 @media (hover: none), (pointer: coarse) {
   .overlay {
     opacity: 1;

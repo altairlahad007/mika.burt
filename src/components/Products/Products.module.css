@@ -32,6 +32,52 @@
   background: linear-gradient(90deg, var(--color-primary), transparent);
 }
 
+.orderButton {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: transparent;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-full);
+  color: var(--color-text);
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: border-color var(--transition-fast), background var(--transition-fast);
+}
+
+.orderButton:hover {
+  border-color: var(--color-primary);
+  background: var(--color-surface);
+}
+
+.orderIcon {
+  font-size: 1rem;
+  line-height: 1;
+  display: inline-block;
+  transition: transform 0.3s ease;
+}
+
+.orderIcon.flipped {
+  transform: rotate(180deg);
+}
+
+@media (max-width: 480px) {
+  .orderButton {
+    padding: 8px 10px;
+    gap: 0;
+  }
+
+  .orderLabel {
+    display: none;
+  }
+}
+
 .scrollContainer {
   position: relative;
   width: 100%;
@@ -53,7 +99,7 @@
   position: relative;
   flex: 0 0 clamp(260px, 28vw, 450px);
   width: clamp(260px, 28vw, 450px);
-  height: clamp(380px, 55vw, 550px);
+  height: min(clamp(380px, 55vw, 550px), calc(var(--viewport-height) - 260px));
   display: flex;
   flex-direction: column;
   border: 1px solid var(--color-border);
@@ -117,6 +163,23 @@
   transform: translateY(0);
 }
 
+.yearPill {
+  position: absolute;
+  top: var(--space-3);
+  right: var(--space-3);
+  z-index: 2;
+  padding: 0.25rem 0.75rem;
+  border-radius: var(--radius-full);
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  color: #ffffff;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: 0.1em;
+  pointer-events: none;
+}
+
 /* Touch devices: always show titles */
 @media (hover: none), (pointer: coarse) {
   .overlay {
@@ -140,8 +203,8 @@
   }
 }
 
-/* Mobile: vertical grid instead of horizontal pin scroll */
-@media (max-width: 768px) {
+/* Mobile / short screens: vertical grid instead of horizontal pin scroll */
+@media (max-width: 768px), (max-height: 500px) {
   .productsSection {
     min-height: auto;
     overflow: visible;

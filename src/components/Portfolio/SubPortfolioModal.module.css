@@ -26,6 +26,7 @@
   overflow-x: hidden;
   overscroll-behavior: contain;
   -webkit-overflow-scrolling: touch;
+  touch-action: pan-y;
   padding: calc(88px + var(--safe-top)) clamp(16px, 4vw, 40px) calc(48px + var(--safe-bottom));
   box-sizing: border-box;
 }

@@ -85,6 +85,8 @@ function Portfolio() {
       for (const [title, data] of Object.entries(portfolioData || {})) {
         pMap[title] = {
           title: data.title || title,
+          order: data.order,
+          year: data.year,
           images: [],
           displayImage: null,
           isNested: data.isNested || knownNested.includes(title),
@@ -95,6 +97,8 @@ function Portfolio() {
           for (const [subTitle, subData] of Object.entries(data.subPortfolios)) {
             pMap[title].subPortfolios[subTitle] = {
               title: subData.title || subTitle,
+              order: subData.order,
+              year: subData.year,
               images: [],
               displayImage: null,
               textData: subData.textData || {}
@@ -107,6 +111,8 @@ function Portfolio() {
         if (!pMap[nestedName]) {
           pMap[nestedName] = {
             title: nestedName,
+            order: portfolioData?.[nestedName]?.order,
+            year: portfolioData?.[nestedName]?.year,
             images: [],
             displayImage: null,
             isNested: true,
@@ -132,6 +138,8 @@ function Portfolio() {
         if (!pMap[portfolioName]) {
           pMap[portfolioName] = {
             title: portfolioName,
+            order: portfolioData?.[portfolioName]?.order,
+            year: portfolioData?.[portfolioName]?.year,
             images: [],
             displayImage: null,
             isNested: isKnownNested,
@@ -147,6 +155,8 @@ function Portfolio() {
           if (!pMap[portfolioName].subPortfolios[subFolderName]) {
             pMap[portfolioName].subPortfolios[subFolderName] = {
               title: subFolderName,
+              order: portfolioData?.[portfolioName]?.subPortfolios?.[subFolderName]?.order,
+              year: portfolioData?.[portfolioName]?.subPortfolios?.[subFolderName]?.year,
               images: [],
               displayImage: null,
               textData: portfolioData?.[portfolioName]?.subPortfolios?.[subFolderName]?.textData || {}
@@ -188,7 +198,7 @@ function Portfolio() {
             })
             return sub
           })
-          subList.sort((a, b) => a.title.localeCompare(b.title))
+          subList.sort((a, b) => (a.order ?? Infinity) - (b.order ?? Infinity) || a.title.localeCompare(b.title))
           p.subPortfolioList = subList
           if (!p.displayImage && subList.length > 0) {
             p.displayImage = subList[0].displayImage
@@ -206,7 +216,7 @@ function Portfolio() {
         return p
       })
 
-      pList.sort((a, b) => a.title.localeCompare(b.title))
+      pList.sort((a, b) => (a.order ?? Infinity) - (b.order ?? Infinity) || a.title.localeCompare(b.title))
       return pList
     } catch (err) {
       console.error('[Portfolio] useMemo crashed:', err)
@@ -251,6 +261,9 @@ function Portfolio() {
               <div className={styles.overlay}>
                 <h3 className={styles.cardTitle}>{portfolio.title}</h3>
               </div>
+              {portfolio.year && (
+                <span className={styles.yearPill}>{portfolio.year}</span>
+              )}
             </div>
           ))}
         </div>

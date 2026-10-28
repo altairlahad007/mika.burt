@@ -5,6 +5,7 @@ import { getHorizontalScrollBuffer, prefersReducedMotion } from '../../utils/res
 import styles from './Products.module.css'
 import PortfolioModal from '../Portfolio/PortfolioModal'
 import SubPortfolioModal from '../Portfolio/SubPortfolioModal'
+import portfolioData from '../../data/portfolioData.json'
 
 // Dynamically load all images from portfolio subdirectories
 // Use a pattern that works reliably on Windows
@@ -36,6 +37,7 @@ function Products() {
   const wrapperRef = useRef(null)
   const [selectedPortfolio, setSelectedPortfolio] = useState(null)
   const [subPortfolioParent, setSubPortfolioParent] = useState(null)
+  const [isReversed, setIsReversed] = useState(false)
 
   const portfolios = useMemo(() => {
     const pMap = {}
@@ -53,21 +55,25 @@ function Products() {
       if (!pMap[portfolioName]) {
         pMap[portfolioName] = {
           title: portfolioName,
+          order: portfolioData?.[portfolioName]?.order,
+          year: portfolioData?.[portfolioName]?.year,
           images: [],
           displayImage: null,
-          isNested: knownNested.includes(portfolioName),
+          isNested: knownNested.includes(portfolioName) || !!portfolioData?.[portfolioName]?.isNested,
           subPortfolios: {}
         }
       }
 
       const portfolio = pMap[portfolioName]
 
-      if (knownNested.includes(portfolioName) && parts.length >= 3) {
+      if (portfolio.isNested && parts.length >= 3) {
         const subFolderName = parts[1]
 
         if (!portfolio.subPortfolios[subFolderName]) {
           portfolio.subPortfolios[subFolderName] = {
             title: subFolderName,
+            order: portfolioData?.[portfolioName]?.subPortfolios?.[subFolderName]?.order,
+            year: portfolioData?.[portfolioName]?.subPortfolios?.[subFolderName]?.year,
             images: [],
             displayImage: null
           }
@@ -106,7 +112,7 @@ function Products() {
           return sub
         })
 
-        subList.sort((a, b) => a.title.localeCompare(b.title))
+        subList.sort((a, b) => (a.order ?? Infinity) - (b.order ?? Infinity) || a.title.localeCompare(b.title))
         p.subPortfolioList = subList
         if (!p.displayImage && subList.length > 0) {
           p.displayImage = subList[0].displayImage
@@ -124,14 +130,18 @@ function Products() {
       return p
     })
 
-    pList.sort((a, b) => a.title.localeCompare(b.title))
+    pList.sort((a, b) => (a.order ?? Infinity) - (b.order ?? Infinity) || a.title.localeCompare(b.title))
     return pList
   }, [])
+
+  const displayedPortfolios = useMemo(() => {
+    return isReversed ? [...portfolios].reverse() : portfolios
+  }, [portfolios, isReversed])
 
   useEffect(() => {
     if (!sectionRef.current || !wrapperRef.current) return
 
-    const mobileQuery = window.matchMedia('(max-width: 768px)')
+    const mobileQuery = window.matchMedia('(max-width: 768px), (max-height: 500px)')
     let ctx
 
     const setupScroll = () => {
@@ -193,11 +203,20 @@ function Products() {
       <div className={styles.header}>
         <h2 className={styles.sectionTitle}>WORKS</h2>
         <div className={styles.line}></div>
+        <button
+          className={styles.orderButton}
+          onClick={() => setIsReversed(v => !v)}
+          aria-label={isReversed ? 'Restore original order' : 'Reverse order'}
+          aria-pressed={isReversed}
+        >
+          <span className={`${styles.orderIcon} ${isReversed ? styles.flipped : ''}`}>&#8645;</span>
+          <span className={styles.orderLabel}>ORDER</span>
+        </button>
       </div>
 
       <div className={styles.scrollContainer}>
         <div ref={wrapperRef} className={styles.cardsWrapper}>
-          {portfolios.map((portfolio, idx) => (
+          {displayedPortfolios.map((portfolio, idx) => (
             <div
               key={idx}
               className={styles.card}
@@ -212,6 +231,9 @@ function Products() {
               <div className={styles.overlay}>
                 <h3 className={styles.cardTitle}>{portfolio.title}</h3>
               </div>
+              {portfolio.year && (
+                <span className={styles.yearPill}>{portfolio.year}</span>
+              )}
             </div>
           ))}
         </div>
