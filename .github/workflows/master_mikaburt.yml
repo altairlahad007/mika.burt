@@ -1,4 +1,4 @@
-name: Build and deploy static site to Oracle Cloud - mikaburt
+name: Build and deploy to GitHub Pages - mikaburt
 
 on:
   push:
@@ -6,42 +6,44 @@ on:
       - master
   workflow_dispatch:
 
-env:
-  STAGING_DIR: ~/mikaburt-static # Staging dir in the SSH user's home
-  WEB_DIR: /var/www/mikaburt.com # Served by nginx/apache
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: github-pages
+  cancel-in-progress: true
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read #This is required for actions/checkout
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
 
     steps:
       - uses: actions/checkout@v4
 
       - name: Set up Node.js version
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: '24.x'
+          cache: npm
 
       - name: npm install and build
         run: |
-          npm install
+          npm ci
           npm run build
 
-      - name: Set up SSH agent
-        uses: webfactory/ssh-agent@v0.9.0
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
         with:
-          ssh-private-key: ${{ secrets.OCI_SSH_KEY }}
+          path: dist
 
-      - name: Add instance to known_hosts
-        run: ssh-keyscan -H ${{ secrets.OCI_HOST }} >> ~/.ssh/known_hosts
-
-      - name: Upload build output to home staging dir
-        run: rsync -avz --delete dist/ ${{ secrets.OCI_USER }}@${{ secrets.OCI_HOST }}:${{ env.STAGING_DIR }}/
-
-      - name: Publish to web root
-        run: |
-          ssh ${{ secrets.OCI_USER }}@${{ secrets.OCI_HOST }} "
-            sudo rsync -a --delete ${{ env.STAGING_DIR }}/ ${{ env.WEB_DIR }}/
-          "
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
